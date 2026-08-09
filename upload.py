@@ -5,18 +5,20 @@ from pathlib import Path
 from urllib.parse import quote
 
 
-# ==========================================
+# =====================================================
 # PATHS
-# ==========================================
+# =====================================================
 
 REPO_FOLDER = r"C:\Users\Mahith Chowdary\Downloads\cine-gallery"
 
-MEDIA_FOLDER = r"C:\Users\Mahith Chowdary\Downloads\cine-gallery\media"
+MEDIA_FOLDER = os.path.join(REPO_FOLDER, "media")
+PHOTOS_FOLDER = os.path.join(REPO_FOLDER, "photos")
+VIDEOS_FOLDER = os.path.join(REPO_FOLDER, "videos")
 
 
-# ==========================================
+# =====================================================
 # FILE TYPES
-# ==========================================
+# =====================================================
 
 IMAGE_EXTENSIONS = {
     ".jpg",
@@ -37,46 +39,120 @@ VIDEO_EXTENSIONS = {
 ALL_EXTENSIONS = IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
 
 
-# ==========================================
-# CREATE WEBSITE
-# ==========================================
+# =====================================================
+# CREATE NEW FOLDERS
+# =====================================================
 
-def create_website():
+os.makedirs(MEDIA_FOLDER, exist_ok=True)
+os.makedirs(PHOTOS_FOLDER, exist_ok=True)
+os.makedirs(VIDEOS_FOLDER, exist_ok=True)
 
-    files = []
+
+# =====================================================
+# GET ALL MEDIA
+# =====================================================
+
+def get_media():
+
+    photos = []
+    videos = []
+
+    # -------------------------------------------------
+    # OLD MEDIA FOLDER
+    # -------------------------------------------------
 
     for file in Path(MEDIA_FOLDER).iterdir():
 
-        if (
-            file.is_file()
-            and file.suffix.lower() in ALL_EXTENSIONS
-        ):
-            files.append(file)
+        if not file.is_file():
+            continue
 
-    files.sort(key=lambda x: x.name.lower())
+        extension = file.suffix.lower()
 
+        if extension in IMAGE_EXTENSIONS:
 
-    # Separate images and videos
+            photos.append(
+                (file, "media")
+            )
 
-    images = [
-        file for file in files
-        if file.suffix.lower() in IMAGE_EXTENSIONS
-    ]
+        elif extension in VIDEO_EXTENSIONS:
 
-    videos = [
-        file for file in files
-        if file.suffix.lower() in VIDEO_EXTENSIONS
-    ]
+            videos.append(
+                (file, "media")
+            )
 
 
-    post_count = len(files)
-    image_count = len(images)
+    # -------------------------------------------------
+    # NEW PHOTOS FOLDER
+    # -------------------------------------------------
+
+    for file in Path(PHOTOS_FOLDER).iterdir():
+
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() in IMAGE_EXTENSIONS:
+
+            photos.append(
+                (file, "photos")
+            )
+
+
+    # -------------------------------------------------
+    # NEW VIDEOS FOLDER
+    # -------------------------------------------------
+
+    for file in Path(VIDEOS_FOLDER).iterdir():
+
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() in VIDEO_EXTENSIONS:
+
+            videos.append(
+                (file, "videos")
+            )
+
+
+    # Sort
+
+    photos.sort(
+        key=lambda x: x[0].name.lower()
+    )
+
+    videos.sort(
+        key=lambda x: x[0].name.lower()
+    )
+
+    return photos, videos
+
+
+# =====================================================
+# GET WEBSITE PATH
+# =====================================================
+
+def get_web_path(file, folder_type):
+
+    filename = quote(file.name)
+
+    return f"{folder_type}/{filename}"
+
+
+# =====================================================
+# CREATE WEBSITE
+# =====================================================
+
+def create_website():
+
+    photos, videos = get_media()
+
+    photo_count = len(photos)
     video_count = len(videos)
+    total_count = photo_count + video_count
 
 
-    # ==========================================
-    # HTML
-    # ==========================================
+    # =================================================
+    # HTML START
+    # =================================================
 
     html = f"""
 <!DOCTYPE html>
@@ -95,9 +171,9 @@ def create_website():
 
 <style>
 
-/* ==========================================
+/* =================================================
    GENERAL
-   ========================================== */
+   ================================================= */
 
 * {{
     margin: 0;
@@ -119,9 +195,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    SIDEBAR
-   ========================================== */
+   ================================================= */
 
 .sidebar {{
 
@@ -150,7 +226,9 @@ body {{
 }}
 
 
-/* LOGO */
+/* =================================================
+   LOGO
+   ================================================= */
 
 .logo {{
 
@@ -179,9 +257,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    NAVIGATION
-   ========================================== */
+   ================================================= */
 
 .nav button {{
 
@@ -228,9 +306,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    STATS
-   ========================================== */
+   ================================================= */
 
 .stats {{
 
@@ -265,9 +343,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    MAIN
-   ========================================== */
+   ================================================= */
 
 .main {{
 
@@ -278,9 +356,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    HEADER
-   ========================================== */
+   ================================================= */
 
 .page-header {{
 
@@ -305,9 +383,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    GALLERY
-   ========================================== */
+   ================================================= */
 
 .gallery {{
 
@@ -324,9 +402,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    CARD
-   ========================================== */
+   ================================================= */
 
 .card {{
 
@@ -338,14 +416,12 @@ body {{
 
     overflow: hidden;
 
-    contain: content;
-
 }}
 
 
-/* ==========================================
+/* =================================================
    IMAGES
-   ========================================== */
+   ================================================= */
 
 .card img {{
 
@@ -362,9 +438,9 @@ body {{
 }}
 
 
-/* ==========================================
+/* =================================================
    VIDEOS
-   ========================================== */
+   ================================================= */
 
 .card video {{
 
@@ -383,26 +459,9 @@ body {{
 }}
 
 
-/* ==========================================
-   SECTION
-   ========================================== */
-
-.section-title {{
-
-    font-size: 25px;
-
-    margin-bottom: 25px;
-
-    border-left: 4px solid #777;
-
-    padding-left: 12px;
-
-}}
-
-
-/* ==========================================
+/* =================================================
    MOBILE
-   ========================================== */
+   ================================================= */
 
 @media (max-width: 700px) {{
 
@@ -473,7 +532,6 @@ body {{
 
 }}
 
-
 </style>
 
 </head>
@@ -482,9 +540,9 @@ body {{
 <body>
 
 
-<!-- ==========================================
+<!-- =================================================
      SIDEBAR
-     ========================================== -->
+     ================================================= -->
 
 <aside class="sidebar">
 
@@ -500,28 +558,28 @@ body {{
 
 <div class="nav">
 
-
 <button
     class="active"
-    onclick="showMedia('image', this)">
+    onclick="showSection('photos', this)">
 
-🖼️ &nbsp; Images
+🖼️ &nbsp; Photos
 
 </button>
 
 
 <button
-    onclick="showMedia('video', this)">
+    onclick="showSection('videos', this)">
 
 🎥 &nbsp; Videos
 
 </button>
 
-
 </div>
 
 
-<!-- STATS -->
+<!-- =================================================
+     COUNTS
+     ================================================= -->
 
 <div class="stats">
 
@@ -529,16 +587,16 @@ body {{
 
 <span>Posts</span>
 
-<strong>{post_count}</strong>
+<strong>{total_count}</strong>
 
 </div>
 
 
 <div class="stat">
 
-<span>Images</span>
+<span>Photos</span>
 
-<strong>{image_count}</strong>
+<strong>{photo_count}</strong>
 
 </div>
 
@@ -557,9 +615,9 @@ body {{
 </aside>
 
 
-<!-- ==========================================
+<!-- =================================================
      MAIN
-     ========================================== -->
+     ================================================= -->
 
 <main class="main">
 
@@ -567,7 +625,7 @@ body {{
 <div class="page-header">
 
 <h2 id="pageTitle">
-Images
+Photos
 </h2>
 
 <p id="pageDescription">
@@ -577,28 +635,36 @@ My photo collection
 </div>
 
 
-<div class="gallery" id="gallery">
+<!-- =================================================
+     PHOTOS
+     ================================================= -->
+
+<div id="photos">
+
+
+<div class="gallery">
 """
 
 
-    # ==========================================
-    # IMAGES
-    # ==========================================
+    # =================================================
+    # ADD PHOTOS
+    # =================================================
 
-    for file in images:
+    for file, folder_type in photos:
 
-        filename = file.name
-
-        url_filename = quote(filename)
+        web_path = get_web_path(
+            file,
+            folder_type
+        )
 
 
         html += f"""
 
-<div class="card media-image">
+<div class="card">
 
 <img
-    src="media/{url_filename}"
-    alt="Gallery Image"
+    src="{web_path}"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -607,20 +673,40 @@ My photo collection
 """
 
 
-    # ==========================================
-    # VIDEOS
-    # ==========================================
+    html += """
 
-    for file in videos:
+</div>
 
-        filename = file.name
+</div>
 
-        url_filename = quote(filename)
+
+<!-- =================================================
+     VIDEOS
+     ================================================= -->
+
+<div id="videos"
+     style="display: none;">
+
+
+<div class="gallery">
+"""
+
+
+    # =================================================
+    # ADD VIDEOS
+    # =================================================
+
+    for file, folder_type in videos:
+
+        web_path = get_web_path(
+            file,
+            folder_type
+        )
 
 
         html += f"""
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -628,7 +714,7 @@ My photo collection
     playsinline>
 
 <source
-    src="media/{url_filename}">
+    src="{web_path}">
 
 Your browser does not support video.
 
@@ -639,41 +725,30 @@ Your browser does not support video.
 """
 
 
-    # ==========================================
-    # JAVASCRIPT
-    # ==========================================
-
     html += """
 
 </div>
 
+</div>
+
+
 </main>
 
+
+<!-- =================================================
+     JAVASCRIPT
+     ================================================= -->
 
 <script>
 
 
-function showMedia(type, button) {
+function showSection(section, button) {{
 
+    const photos =
+        document.getElementById("photos");
 
-    const cards =
-        document.querySelectorAll(".card");
-
-
-    // Remove active state
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
-
-
-    // Activate clicked button
-
-    button.classList.add("active");
+    const videos =
+        document.getElementById("videos");
 
 
     const title =
@@ -681,82 +756,63 @@ function showMedia(type, button) {
 
 
     const description =
-        document.getElementById("pageDescription");
+        document.getElementById(
+            "pageDescription"
+        );
 
 
-    // ======================================
-    // IMAGES
-    // ======================================
+    // Remove active state
 
-    if (type === "image") {
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {{
 
+            btn.classList.remove("active");
 
-        cards.forEach(card => {
-
-            if (
-                card.classList.contains(
-                    "media-image"
-                )
-            ) {
-
-                card.style.display = "block";
-
-            }
-
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
+        }});
 
 
-        title.innerText = "Images";
+    // Activate clicked button
+
+    button.classList.add("active");
+
+
+    // =================================================
+    // PHOTOS
+    // =================================================
+
+    if (section === "photos") {{
+
+        photos.style.display = "block";
+
+        videos.style.display = "none";
+
+        title.innerText = "Photos";
 
         description.innerText =
             "My photo collection";
 
-    }
+    }}
 
 
-    // ======================================
+    // =================================================
     // VIDEOS
-    // ======================================
+    // =================================================
 
-    else if (type === "video") {
+    if (section === "videos") {{
 
+        photos.style.display = "none";
 
-        cards.forEach(card => {
-
-            if (
-                card.classList.contains(
-                    "media-video"
-                )
-            ) {
-
-                card.style.display = "block";
-
-            }
-
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
+        videos.style.display = "block";
 
         title.innerText = "Videos";
 
         description.innerText =
             "My video collection";
 
-    }
+    }}
 
-}
-
+}}
 
 </script>
 
@@ -767,9 +823,9 @@ function showMedia(type, button) {
 """
 
 
-    # ==========================================
-    # SAVE
-    # ==========================================
+    # =================================================
+    # SAVE INDEX.HTML
+    # =================================================
 
     index_file = os.path.join(
         REPO_FOLDER,
@@ -786,30 +842,33 @@ function showMedia(type, button) {
         f.write(html)
 
 
-    print(
-        f"Website updated with {post_count} media files."
-    )
+    print()
+    print("Website updated!")
+    print()
+    print(f"Posts:  {total_count}")
+    print(f"Photos: {photo_count}")
+    print(f"Videos: {video_count}")
+    print()
 
-    print(
-        f"Images: {image_count} | "
-        f"Videos: {video_count}"
-    )
 
-
-# ==========================================
+# =====================================================
 # GIT PUSH
-# ==========================================
+# =====================================================
 
 def push_to_github():
 
     os.chdir(REPO_FOLDER)
 
 
+    # Add changes
+
     subprocess.run(
         ["git", "add", "."],
         check=True
     )
 
+
+    # Check changes
 
     result = subprocess.run(
         ["git", "diff", "--cached", "--quiet"]
@@ -823,6 +882,8 @@ def push_to_github():
         return
 
 
+    # Commit
+
     subprocess.run(
         [
             "git",
@@ -833,6 +894,8 @@ def push_to_github():
         check=True
     )
 
+
+    # Push
 
     subprocess.run(
         [
@@ -848,9 +911,43 @@ def push_to_github():
     print("✅ Successfully pushed to GitHub!")
 
 
-# ==========================================
+# =====================================================
+# GET FOLDER STATE
+# =====================================================
+
+def get_folder_state():
+
+    state = {}
+
+
+    folders = [
+        ("media", MEDIA_FOLDER),
+        ("photos", PHOTOS_FOLDER),
+        ("videos", VIDEOS_FOLDER)
+    ]
+
+
+    for folder_name, folder_path in folders:
+
+        for file in Path(folder_path).iterdir():
+
+            if not file.is_file():
+                continue
+
+            state[
+                folder_name + "/" + file.name
+            ] = (
+                file.stat().st_size,
+                file.stat().st_mtime
+            )
+
+
+    return state
+
+
+# =====================================================
 # START
-# ==========================================
+# =====================================================
 
 print()
 
@@ -862,29 +959,43 @@ print("======================================")
 
 print()
 
-print("Media folder:")
+print("Existing media folder:")
 
 print(MEDIA_FOLDER)
 
 print()
 
-print("Watching for new files...")
+print("New photos folder:")
+
+print(PHOTOS_FOLDER)
+
+print()
+
+print("New videos folder:")
+
+print(VIDEOS_FOLDER)
+
+print()
+
+print("Watching all folders...")
 
 print("Press CTRL + C to stop.")
 
 print()
 
 
-# Initial update
+# =====================================================
+# FIRST UPDATE
+# =====================================================
 
 create_website()
 
 push_to_github()
 
 
-# ==========================================
+# =====================================================
 # WATCH
-# ==========================================
+# =====================================================
 
 while True:
 
@@ -893,46 +1004,16 @@ while True:
         time.sleep(10)
 
 
-        current_files = {
-
-            file.name: (
-                file.stat().st_size,
-                file.stat().st_mtime
-            )
-
-            for file in Path(MEDIA_FOLDER).iterdir()
-
-            if (
-                file.is_file()
-                and file.suffix.lower()
-                in ALL_EXTENSIONS
-            )
-
-        }
+        old_state = get_folder_state()
 
 
         time.sleep(2)
 
 
-        new_files = {
-
-            file.name: (
-                file.stat().st_size,
-                file.stat().st_mtime
-            )
-
-            for file in Path(MEDIA_FOLDER).iterdir()
-
-            if (
-                file.is_file()
-                and file.suffix.lower()
-                in ALL_EXTENSIONS
-            )
-
-        }
+        new_state = get_folder_state()
 
 
-        if current_files != new_files:
+        if old_state != new_state:
 
             print()
 

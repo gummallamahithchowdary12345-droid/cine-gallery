@@ -15,9 +15,9 @@
 
 <style>
 
-/* ==========================================
+/* =================================================
    GENERAL
-   ========================================== */
+   ================================================= */
 
 * {
     margin: 0;
@@ -39,9 +39,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    SIDEBAR
-   ========================================== */
+   ================================================= */
 
 .sidebar {
 
@@ -70,7 +70,9 @@ body {
 }
 
 
-/* LOGO */
+/* =================================================
+   LOGO
+   ================================================= */
 
 .logo {
 
@@ -99,9 +101,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    NAVIGATION
-   ========================================== */
+   ================================================= */
 
 .nav button {
 
@@ -148,9 +150,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    STATS
-   ========================================== */
+   ================================================= */
 
 .stats {
 
@@ -185,9 +187,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    MAIN
-   ========================================== */
+   ================================================= */
 
 .main {
 
@@ -198,9 +200,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    HEADER
-   ========================================== */
+   ================================================= */
 
 .page-header {
 
@@ -225,9 +227,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    GALLERY
-   ========================================== */
+   ================================================= */
 
 .gallery {
 
@@ -244,9 +246,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    CARD
-   ========================================== */
+   ================================================= */
 
 .card {
 
@@ -258,14 +260,12 @@ body {
 
     overflow: hidden;
 
-    contain: content;
-
 }
 
 
-/* ==========================================
+/* =================================================
    IMAGES
-   ========================================== */
+   ================================================= */
 
 .card img {
 
@@ -282,9 +282,9 @@ body {
 }
 
 
-/* ==========================================
+/* =================================================
    VIDEOS
-   ========================================== */
+   ================================================= */
 
 .card video {
 
@@ -303,26 +303,9 @@ body {
 }
 
 
-/* ==========================================
-   SECTION
-   ========================================== */
-
-.section-title {
-
-    font-size: 25px;
-
-    margin-bottom: 25px;
-
-    border-left: 4px solid #777;
-
-    padding-left: 12px;
-
-}
-
-
-/* ==========================================
+/* =================================================
    MOBILE
-   ========================================== */
+   ================================================= */
 
 @media (max-width: 700px) {
 
@@ -393,7 +376,6 @@ body {
 
 }
 
-
 </style>
 
 </head>
@@ -402,9 +384,9 @@ body {
 <body>
 
 
-<!-- ==========================================
+<!-- =================================================
      SIDEBAR
-     ========================================== -->
+     ================================================= -->
 
 <aside class="sidebar">
 
@@ -420,28 +402,28 @@ body {
 
 <div class="nav">
 
-
 <button
     class="active"
-    onclick="showMedia('image', this)">
+    onclick="showSection('photos', this)">
 
-🖼️ &nbsp; Images
+🖼️ &nbsp; Photos
 
 </button>
 
 
 <button
-    onclick="showMedia('video', this)">
+    onclick="showSection('videos', this)">
 
 🎥 &nbsp; Videos
 
 </button>
 
-
 </div>
 
 
-<!-- STATS -->
+<!-- =================================================
+     COUNTS
+     ================================================= -->
 
 <div class="stats">
 
@@ -449,16 +431,16 @@ body {
 
 <span>Posts</span>
 
-<strong>139</strong>
+<strong>229</strong>
 
 </div>
 
 
 <div class="stat">
 
-<span>Images</span>
+<span>Photos</span>
 
-<strong>66</strong>
+<strong>107</strong>
 
 </div>
 
@@ -467,7 +449,7 @@ body {
 
 <span>Videos</span>
 
-<strong>73</strong>
+<strong>122</strong>
 
 </div>
 
@@ -477,9 +459,9 @@ body {
 </aside>
 
 
-<!-- ==========================================
+<!-- =================================================
      MAIN
-     ========================================== -->
+     ================================================= -->
 
 <main class="main">
 
@@ -487,7 +469,7 @@ body {
 <div class="page-header">
 
 <h2 id="pageTitle">
-Images
+Photos
 </h2>
 
 <p id="pageDescription">
@@ -497,14 +479,513 @@ My photo collection
 </div>
 
 
-<div class="gallery" id="gallery">
+<!-- =================================================
+     PHOTOS
+     ================================================= -->
+
+<div id="photos">
 
 
-<div class="card media-image">
+<div class="gallery">
+
+
+<div class="card">
+
+<img
+    src="photos/17872011951627797.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17873965548687389.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17876820363619923.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17898461688480680.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17903384565442225.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17904755616452757.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17932489002300645.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17934481992290598.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17935662642260477.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17939823339069794.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17947778460247345.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17965673673133118.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17968471937938362.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17971955328085294.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/17992861823990199.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18009500816744812.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18015633104707463.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18026555447671420.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18064883741492807.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18079070960676512.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18085739516564913.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18098716379175587.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18099878966186600.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18102481504926114.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18106047577805918.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18109977022975999.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18112042646051007.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18112438070506763.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18118305730882945.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18120186451882019.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18120618280756121.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18120686387481046.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18123165298793572.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18148589251524617.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18156737425468512.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18213333967338923.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18328023370260815.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18371358169238853.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18438556888126249.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18476329375109428.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="photos/18608441119006864.jpg"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+
+
+
+<div class="card">
 
 <img
     src="media/758518242_18580071877071855_3846182736683844428_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -512,11 +993,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/759986984_18116782652484637_4682205668853800192_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -524,11 +1005,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/761375750_18116530760484637_931486884404333885_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -536,11 +1017,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/763355708_18116921534484637_6397802194979456873_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -548,11 +1029,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/763487377_18117361682484637_557398657164045554_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -560,11 +1041,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/768963045_18112725865978800_4738299292422644807_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -572,11 +1053,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/769251958_18112725763978800_7650652253276267095_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -584,11 +1065,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/769294883_18112725841978800_2151891959749816114_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -596,11 +1077,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T08-55-38.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -608,11 +1089,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-24-54.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -620,11 +1101,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-25-02.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -632,11 +1113,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-25-12.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -644,11 +1125,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-28.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -656,11 +1137,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-37.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -668,11 +1149,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-47.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -680,11 +1161,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-02.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -692,11 +1173,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-11.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -704,11 +1185,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-58.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -716,11 +1197,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-07.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -728,11 +1209,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-18.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -740,11 +1221,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-30.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -752,11 +1233,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-47.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -764,11 +1245,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-17.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -776,11 +1257,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-26.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -788,11 +1269,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-37.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -800,11 +1281,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-02.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -812,11 +1293,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-14.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -824,11 +1305,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-37.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -836,11 +1317,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-24.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -848,11 +1329,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-33.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -860,11 +1341,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-44.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -872,11 +1353,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-54.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -884,11 +1365,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-04.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -896,11 +1377,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-25.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -908,11 +1389,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-36.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -920,11 +1401,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-48.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -932,11 +1413,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-33-05.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -944,11 +1425,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_28_12%20PM.png"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -956,11 +1437,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_35_16%20PM.png"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -968,11 +1449,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/ezgif-frame-097.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -980,11 +1461,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/ezgif-frame-098.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -992,11 +1473,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/Les%20balles%20filantes%2C%20version%20Arthur%20Fils%20%F0%9F%8E%BE%23OBN26--No%20one%20does%20the%20post-match%20ball%20toss%20like%20Fil.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1004,11 +1485,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/nickstermann-2026-07-29T06-08-59.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1016,11 +1497,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/nickstermann-2026-07-30T00-11-08.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1028,11 +1509,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/nickstermann-2026-07-30T00-44-13.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1040,11 +1521,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/photo1.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1052,11 +1533,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/prabhjyott-2026-07-30T10-41-00.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1064,11 +1545,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/prabhjyott-2026-07-30T10-41-50.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1076,11 +1557,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/prabhjyott-2026-07-30T10-47-03.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1088,11 +1569,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/R16%20%F0%9F%94%9CFrench%20No.%201%20%40arthur.fils%20keeps%20the%20good%20times%20rolling%20with%20a%206-3%2C%206-2%20win%20over%20Navone.%40ob%20%281%29.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1100,11 +1581,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/R16%20%F0%9F%94%9CFrench%20No.%201%20%40arthur.fils%20keeps%20the%20good%20times%20rolling%20with%20a%206-3%2C%206-2%20win%20over%20Navone.%40ob.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1112,11 +1593,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/SaveClip.App_758542833_18423140014176310_3526740350525280801_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1124,11 +1605,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/SaveClip.App_760701872_18071344802710201_6325784018369693438_n.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1136,11 +1617,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-55-42.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1148,11 +1629,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-55-45.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1160,11 +1641,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-04.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1172,11 +1653,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-07.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1184,11 +1665,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-10.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1196,11 +1677,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-13.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1208,11 +1689,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-21.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1220,11 +1701,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-45.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1232,11 +1713,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-51.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1244,11 +1725,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-54.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1256,11 +1737,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-00.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1268,11 +1749,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-02.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1280,11 +1761,11 @@ My photo collection
 
 
 
-<div class="card media-image">
+<div class="card">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-04.jpg"
-    alt="Gallery Image"
+    alt="Photo"
     loading="lazy"
     decoding="async">
 
@@ -1292,7 +1773,905 @@ My photo collection
 
 
 
-<div class="card media-video">
+</div>
+
+</div>
+
+
+<!-- =================================================
+     VIDEOS
+     ================================================= -->
+
+<div id="videos"
+     style="display: none;">
+
+
+<div class="gallery">
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17868312060582442.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17870095497315586.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17877274587512703.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17878350822683596.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17888050809599888.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17890720017398032.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17897346948354359.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17900894715334551.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17923729359389450.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17929649631381026.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17929665849363265.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17932846794276494.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17934434313005252.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17934786195096598.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17947028541037772.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17949412953234371.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17956958874171195.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17962519905151613.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17971100276835286.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/17973812018912753.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18002619068958713.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18004309691768127.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18007327025755861.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18024125123410889.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18060766358766697.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18069107663450938.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18102978767117658.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18107819144004787.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18108874633997292.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18108889403101740.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18110080246990938.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18110201605778033.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18110276470789742.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18122046865691280.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18122143189789291.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18122306617753186.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18143674486531680.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18147607819524145.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18158452543467147.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18179808193407631.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18188499187387143.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18207592966359917.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18269851549258102.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18348211858171684.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18379370848164769.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18385536271164505.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18447944308184848.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18472818142108449.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="videos/18600404338052166.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
 
 <video
     controls
@@ -1310,7 +2689,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1328,7 +2707,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1346,7 +2725,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1364,7 +2743,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1382,7 +2761,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1400,7 +2779,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1418,7 +2797,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1436,7 +2815,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1454,7 +2833,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1472,7 +2851,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1490,7 +2869,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1508,7 +2887,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1526,7 +2905,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1544,7 +2923,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1562,7 +2941,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1580,7 +2959,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1598,7 +2977,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1616,7 +2995,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1634,7 +3013,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1652,7 +3031,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1670,7 +3049,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1688,7 +3067,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1706,7 +3085,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1724,7 +3103,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1742,7 +3121,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1760,7 +3139,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1778,7 +3157,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1796,7 +3175,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1814,7 +3193,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1832,7 +3211,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1850,7 +3229,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1868,7 +3247,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1886,7 +3265,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1904,7 +3283,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1922,7 +3301,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1940,7 +3319,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1958,7 +3337,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1976,7 +3355,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -1994,7 +3373,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2012,7 +3391,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2030,7 +3409,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2048,7 +3427,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2066,7 +3445,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2084,7 +3463,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2102,7 +3481,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2120,7 +3499,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2138,7 +3517,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2156,7 +3535,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2174,7 +3553,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2192,7 +3571,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2210,7 +3589,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2228,7 +3607,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2246,7 +3625,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2264,7 +3643,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2282,7 +3661,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2300,7 +3679,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2318,7 +3697,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2336,7 +3715,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2354,7 +3733,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2372,7 +3751,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2390,7 +3769,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2408,7 +3787,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2426,7 +3805,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2444,7 +3823,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2462,7 +3841,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2480,7 +3859,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2498,7 +3877,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2516,7 +3895,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2534,7 +3913,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2552,7 +3931,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2570,7 +3949,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2588,7 +3967,7 @@ Your browser does not support video.
 
 
 
-<div class="card media-video">
+<div class="card">
 
 <video
     controls
@@ -2608,33 +3987,26 @@ Your browser does not support video.
 
 </div>
 
+</div>
+
+
 </main>
 
+
+<!-- =================================================
+     JAVASCRIPT
+     ================================================= -->
 
 <script>
 
 
-function showMedia(type, button) {
+function showSection(section, button) {{
 
+    const photos =
+        document.getElementById("photos");
 
-    const cards =
-        document.querySelectorAll(".card");
-
-
-    // Remove active state
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
-
-
-    // Activate clicked button
-
-    button.classList.add("active");
+    const videos =
+        document.getElementById("videos");
 
 
     const title =
@@ -2642,82 +4014,63 @@ function showMedia(type, button) {
 
 
     const description =
-        document.getElementById("pageDescription");
+        document.getElementById(
+            "pageDescription"
+        );
 
 
-    // ======================================
-    // IMAGES
-    // ======================================
+    // Remove active state
 
-    if (type === "image") {
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {{
 
+            btn.classList.remove("active");
 
-        cards.forEach(card => {
-
-            if (
-                card.classList.contains(
-                    "media-image"
-                )
-            ) {
-
-                card.style.display = "block";
-
-            }
-
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
+        }});
 
 
-        title.innerText = "Images";
+    // Activate clicked button
+
+    button.classList.add("active");
+
+
+    // =================================================
+    // PHOTOS
+    // =================================================
+
+    if (section === "photos") {{
+
+        photos.style.display = "block";
+
+        videos.style.display = "none";
+
+        title.innerText = "Photos";
 
         description.innerText =
             "My photo collection";
 
-    }
+    }}
 
 
-    // ======================================
+    // =================================================
     // VIDEOS
-    // ======================================
+    // =================================================
 
-    else if (type === "video") {
+    if (section === "videos") {{
 
+        photos.style.display = "none";
 
-        cards.forEach(card => {
-
-            if (
-                card.classList.contains(
-                    "media-video"
-                )
-            ) {
-
-                card.style.display = "block";
-
-            }
-
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
+        videos.style.display = "block";
 
         title.innerText = "Videos";
 
         description.innerText =
             "My video collection";
 
-    }
+    }}
 
-}
-
+}}
 
 </script>
 
