@@ -56,23 +56,26 @@ def create_website():
     files.sort(key=lambda x: x.name.lower())
 
 
-    # Count media
+    # Separate images and videos
 
-    image_count = sum(
-        1 for file in files
+    images = [
+        file for file in files
         if file.suffix.lower() in IMAGE_EXTENSIONS
-    )
+    ]
 
-    video_count = sum(
-        1 for file in files
+    videos = [
+        file for file in files
         if file.suffix.lower() in VIDEO_EXTENSIONS
-    )
+    ]
+
 
     post_count = len(files)
+    image_count = len(images)
+    video_count = len(videos)
 
 
     # ==========================================
-    # START HTML
+    # HTML
     # ==========================================
 
     html = f"""
@@ -102,6 +105,7 @@ def create_website():
     box-sizing: border-box;
 }}
 
+
 body {{
 
     font-family: Arial, sans-serif;
@@ -124,6 +128,7 @@ body {{
     position: fixed;
 
     left: 0;
+
     top: 0;
 
     width: 230px;
@@ -140,6 +145,8 @@ body {{
 
     flex-direction: column;
 
+    z-index: 100;
+
 }}
 
 
@@ -153,6 +160,7 @@ body {{
 
 }}
 
+
 .logo h1 {{
 
     font-size: 27px;
@@ -160,6 +168,7 @@ body {{
     margin-bottom: 8px;
 
 }}
+
 
 .logo p {{
 
@@ -196,7 +205,7 @@ body {{
 
     cursor: pointer;
 
-    transition: 0.25s;
+    transition: 0.2s;
 
 }}
 
@@ -257,7 +266,7 @@ body {{
 
 
 /* ==========================================
-   MAIN CONTENT
+   MAIN
    ========================================== */
 
 .main {{
@@ -269,13 +278,16 @@ body {{
 }}
 
 
-/* HEADER */
+/* ==========================================
+   HEADER
+   ========================================== */
 
 .page-header {{
 
     margin-bottom: 35px;
 
 }}
+
 
 .page-header h2 {{
 
@@ -284,6 +296,7 @@ body {{
     margin-bottom: 8px;
 
 }}
+
 
 .page-header p {{
 
@@ -311,7 +324,9 @@ body {{
 }}
 
 
-/* CARD */
+/* ==========================================
+   CARD
+   ========================================== */
 
 .card {{
 
@@ -323,27 +338,34 @@ body {{
 
     overflow: hidden;
 
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    contain: content;
 
 }}
 
 
-.card:hover {{
+/* ==========================================
+   IMAGES
+   ========================================== */
 
-    transform: translateY(-6px);
+.card img {{
 
-    box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.5);
+    width: 100%;
+
+    height: 350px;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 11px;
 
 }}
 
 
-/* MEDIA */
+/* ==========================================
+   VIDEOS
+   ========================================== */
 
-.card img,
 .card video {{
 
     width: 100%;
@@ -355,6 +377,25 @@ body {{
     display: block;
 
     border-radius: 11px;
+
+    background: #000;
+
+}}
+
+
+/* ==========================================
+   SECTION
+   ========================================== */
+
+.section-title {{
+
+    font-size: 25px;
+
+    margin-bottom: 25px;
+
+    border-left: 4px solid #777;
+
+    padding-left: 12px;
 
 }}
 
@@ -373,11 +414,13 @@ body {{
 
     }}
 
+
     .logo h1 {{
 
         font-size: 0;
 
     }}
+
 
     .logo h1::after {{
 
@@ -387,11 +430,13 @@ body {{
 
     }}
 
+
     .logo p {{
 
         display: none;
 
     }}
+
 
     .nav button {{
 
@@ -403,17 +448,13 @@ body {{
 
     }}
 
-    .nav button::first-letter {{
-
-        font-size: 20px;
-
-    }}
 
     .stats {{
 
         display: none;
 
     }}
+
 
     .main {{
 
@@ -423,6 +464,7 @@ body {{
 
     }}
 
+
     .gallery {{
 
         grid-template-columns: 1fr;
@@ -430,6 +472,7 @@ body {{
     }}
 
 }}
+
 
 </style>
 
@@ -457,16 +500,9 @@ body {{
 
 <div class="nav">
 
+
 <button
     class="active"
-    onclick="showMedia('all', this)">
-
-🏠 &nbsp; All Posts
-
-</button>
-
-
-<button
     onclick="showMedia('image', this)">
 
 🖼️ &nbsp; Images
@@ -480,6 +516,7 @@ body {{
 🎥 &nbsp; Videos
 
 </button>
+
 
 </div>
 
@@ -530,11 +567,11 @@ body {{
 <div class="page-header">
 
 <h2 id="pageTitle">
-All Posts
+Images
 </h2>
 
 <p id="pageDescription">
-All photos and videos
+My photo collection
 </p>
 
 </div>
@@ -545,45 +582,50 @@ All photos and videos
 
 
     # ==========================================
-    # ADD MEDIA
+    # IMAGES
     # ==========================================
 
-    for file in files:
+    for file in images:
 
         filename = file.name
 
         url_filename = quote(filename)
 
-        extension = file.suffix.lower()
 
-
-        # IMAGE
-
-        if extension in IMAGE_EXTENSIONS:
-
-            html += f"""
+        html += f"""
 
 <div class="card media-image">
 
 <img
     src="media/{url_filename}"
     alt="Gallery Image"
-    loading="lazy">
+    loading="lazy"
+    decoding="async">
 
 </div>
 
 """
 
 
-        # VIDEO
+    # ==========================================
+    # VIDEOS
+    # ==========================================
 
-        elif extension in VIDEO_EXTENSIONS:
+    for file in videos:
 
-            html += f"""
+        filename = file.name
+
+        url_filename = quote(filename)
+
+
+        html += f"""
 
 <div class="card media-video">
 
-<video controls preload="metadata">
+<video
+    controls
+    preload="none"
+    playsinline>
 
 <source
     src="media/{url_filename}">
@@ -605,7 +647,6 @@ Your browser does not support video.
 
 </div>
 
-
 </main>
 
 
@@ -615,13 +656,11 @@ Your browser does not support video.
 function showMedia(type, button) {
 
 
-    // Get all cards
-
     const cards =
         document.querySelectorAll(".card");
 
 
-    // Remove active from buttons
+    // Remove active state
 
     document
         .querySelectorAll(".nav button")
@@ -637,8 +676,6 @@ function showMedia(type, button) {
     button.classList.add("active");
 
 
-    // Page title
-
     const title =
         document.getElementById("pageTitle");
 
@@ -647,29 +684,11 @@ function showMedia(type, button) {
         document.getElementById("pageDescription");
 
 
-    // Show everything
+    // ======================================
+    // IMAGES
+    // ======================================
 
-    if (type === "all") {
-
-
-        cards.forEach(card => {
-
-            card.style.display = "block";
-
-        });
-
-
-        title.innerText = "All Posts";
-
-        description.innerText =
-            "All photos and videos";
-
-    }
-
-
-    // Show images
-
-    else if (type === "image") {
+    if (type === "image") {
 
 
         cards.forEach(card => {
@@ -701,7 +720,9 @@ function showMedia(type, button) {
     }
 
 
-    // Show videos
+    // ======================================
+    // VIDEOS
+    // ======================================
 
     else if (type === "video") {
 
@@ -747,7 +768,7 @@ function showMedia(type, button) {
 
 
     # ==========================================
-    # SAVE INDEX.HTML
+    # SAVE
     # ==========================================
 
     index_file = os.path.join(
@@ -854,7 +875,7 @@ print("Press CTRL + C to stop.")
 print()
 
 
-# First update
+# Initial update
 
 create_website()
 
@@ -862,7 +883,7 @@ push_to_github()
 
 
 # ==========================================
-# WATCH FOLDER
+# WATCH
 # ==========================================
 
 while True:
