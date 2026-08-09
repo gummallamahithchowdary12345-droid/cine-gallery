@@ -50,9 +50,28 @@ def create_website():
         if file.is_file() and file.suffix.lower() in ALL_EXTENSIONS:
             files.append(file)
 
+    # Sort files alphabetically
     files.sort(key=lambda x: x.name.lower())
 
-    html = """
+    # Count images and videos
+    image_count = sum(
+        1 for file in files
+        if file.suffix.lower() in IMAGE_EXTENSIONS
+    )
+
+    video_count = sum(
+        1 for file in files
+        if file.suffix.lower() in VIDEO_EXTENSIONS
+    )
+
+    post_count = len(files)
+
+
+    # ==========================================
+    # WEBSITE HTML
+    # ==========================================
+
+    html = f"""
 <!DOCTYPE html>
 
 <html lang="en">
@@ -66,15 +85,18 @@ def create_website():
 
 <title>Cine Gallery</title>
 
+
 <style>
 
-* {
+
+* {{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+}}
 
-body {
+
+body {{
 
     font-family: Arial, sans-serif;
 
@@ -88,20 +110,24 @@ body {
     color: white;
 
     min-height: 100vh;
-}
+
+}}
 
 
-/* HEADER */
+/* ==========================================
+   HEADER
+   ========================================== */
 
-header {
+header {{
 
     text-align: center;
 
     padding: 60px 20px 40px;
 
-}
+}}
 
-header h1 {
+
+header h1 {{
 
     font-size: 48px;
 
@@ -109,20 +135,68 @@ header h1 {
 
     margin-bottom: 12px;
 
-}
+}}
 
-header p {
+
+header p {{
 
     color: #999;
 
     font-size: 17px;
 
-}
+}}
 
 
-/* GALLERY */
+/* ==========================================
+   POST COUNT
+   ========================================== */
 
-.gallery {
+.stats {{
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+
+}}
+
+
+.stat {{
+
+    display: inline-block;
+
+    padding: 9px 18px;
+
+    border-radius: 30px;
+
+    background: #222;
+
+    color: #aaa;
+
+    font-size: 14px;
+
+}}
+
+
+.stat strong {{
+
+    color: white;
+
+    font-size: 16px;
+
+}}
+
+
+/* ==========================================
+   GALLERY
+   ========================================== */
+
+.gallery {{
 
     width: 92%;
 
@@ -142,12 +216,14 @@ header p {
 
     padding-bottom: 60px;
 
-}
+}}
 
 
-/* CARD */
+/* ==========================================
+   CARD
+   ========================================== */
 
-.card {
+.card {{
 
     background: #191919;
 
@@ -161,9 +237,10 @@ header p {
         transform 0.3s ease,
         box-shadow 0.3s ease;
 
-}
+}}
 
-.card:hover {
+
+.card:hover {{
 
     transform: translateY(-8px);
 
@@ -171,13 +248,15 @@ header p {
         0 20px 50px
         rgba(0, 0, 0, 0.6);
 
-}
+}}
 
 
-/* MEDIA */
+/* ==========================================
+   IMAGE / VIDEO
+   ========================================== */
 
 .card img,
-.card video {
+.card video {{
 
     width: 100%;
 
@@ -189,12 +268,14 @@ header p {
 
     display: block;
 
-}
+}}
 
 
-/* FOOTER */
+/* ==========================================
+   FOOTER
+   ========================================== */
 
-footer {
+footer {{
 
     text-align: center;
 
@@ -202,35 +283,38 @@ footer {
 
     color: #666;
 
-}
+}}
 
 
-/* MOBILE */
+/* ==========================================
+   MOBILE
+   ========================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 600px) {{
 
-    header h1 {
+    header h1 {{
 
         font-size: 34px;
 
-    }
+    }}
 
-    .gallery {
+    .gallery {{
 
         width: 94%;
 
         grid-template-columns: 1fr;
 
-    }
+    }}
 
     .card img,
-    .card video {
+    .card video {{
 
         height: auto;
 
-    }
+    }}
 
-}
+}}
+
 
 </style>
 
@@ -240,14 +324,40 @@ footer {
 <body>
 
 
+<!-- ==========================================
+     HEADER
+     ========================================== -->
+
 <header>
 
 <h1>🎬 Cine Gallery</h1>
 
 <p>My collection of photos and videos</p>
 
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>{post_count}</strong> Posts
+    </div>
+
+    <div class="stat">
+        <strong>{image_count}</strong> Photos
+    </div>
+
+    <div class="stat">
+        <strong>{video_count}</strong> Videos
+    </div>
+
+</div>
+
+
 </header>
 
+
+<!-- ==========================================
+     GALLERY
+     ========================================== -->
 
 <main class="gallery">
 """
@@ -261,13 +371,15 @@ footer {
 
         filename = file.name
 
-        # Encode filename safely for website URLs
+        # Safely encode filename for website URL
         url_filename = quote(filename)
 
         extension = file.suffix.lower()
 
 
+        # ======================================
         # IMAGE
+        # ======================================
 
         if extension in IMAGE_EXTENSIONS:
 
@@ -285,7 +397,9 @@ footer {
 """
 
 
+        # ======================================
         # VIDEO
+        # ======================================
 
         elif extension in VIDEO_EXTENSIONS:
 
@@ -293,7 +407,9 @@ footer {
 
 <div class="card">
 
-<video controls preload="metadata">
+<video
+    controls
+    preload="metadata">
 
 <source
     src="media/{url_filename}">
@@ -306,6 +422,10 @@ Your browser does not support video.
 
 """
 
+
+    # ==========================================
+    # CLOSE HTML
+    # ==========================================
 
     html += """
 
@@ -334,6 +454,7 @@ Your browser does not support video.
         "index.html"
     )
 
+
     with open(
         index_file,
         "w",
@@ -342,8 +463,13 @@ Your browser does not support video.
 
         f.write(html)
 
+
     print(
-        f"Website updated with {len(files)} media files."
+        f"Website updated with {post_count} media files."
+    )
+
+    print(
+        f"Photos: {image_count} | Videos: {video_count}"
     )
 
 
@@ -356,7 +482,9 @@ def push_to_github():
     os.chdir(REPO_FOLDER)
 
 
-    # Add everything
+    # ======================================
+    # ADD CHANGES
+    # ======================================
 
     subprocess.run(
         ["git", "add", "."],
@@ -364,7 +492,9 @@ def push_to_github():
     )
 
 
-    # Check whether there are changes
+    # ======================================
+    # CHECK FOR CHANGES
+    # ======================================
 
     result = subprocess.run(
         ["git", "diff", "--cached", "--quiet"]
@@ -372,7 +502,6 @@ def push_to_github():
 
 
     # No changes
-
     if result.returncode == 0:
 
         print("No changes to push.")
@@ -380,7 +509,9 @@ def push_to_github():
         return
 
 
-    # Commit
+    # ======================================
+    # COMMIT
+    # ======================================
 
     subprocess.run(
         [
@@ -393,7 +524,9 @@ def push_to_github():
     )
 
 
-    # Push
+    # ======================================
+    # PUSH TO GITHUB
+    # ======================================
 
     subprocess.run(
         [
@@ -414,12 +547,17 @@ def push_to_github():
 # ==========================================
 
 print()
+
 print("======================================")
+
 print("       CINE GALLERY AUTOMATION")
+
 print("======================================")
+
 print()
 
 print("Media folder:")
+
 print(MEDIA_FOLDER)
 
 print()
@@ -431,24 +569,31 @@ print("Press CTRL + C to stop.")
 print()
 
 
-# First update
+# ==========================================
+# FIRST UPDATE
+# ==========================================
 
 create_website()
 
 push_to_github()
 
 
-# Keep watching
+# ==========================================
+# KEEP WATCHING
+# ==========================================
 
 while True:
 
     try:
 
+        # Check every 10 seconds
         time.sleep(10)
 
-        # Remember current files
+
+        # Get current state of media folder
 
         current_files = {
+
             file.name: (
                 file.stat().st_size,
                 file.stat().st_mtime
@@ -456,16 +601,23 @@ while True:
 
             for file in Path(MEDIA_FOLDER).iterdir()
 
-            if file.is_file()
+            if (
+                file.is_file()
+                and file.suffix.lower() in ALL_EXTENSIONS
+            )
+
         }
 
 
-        # Wait a little more
+        # Wait a little
 
         time.sleep(2)
 
 
+        # Get new state
+
         new_files = {
+
             file.name: (
                 file.stat().st_size,
                 file.stat().st_mtime
@@ -473,20 +625,36 @@ while True:
 
             for file in Path(MEDIA_FOLDER).iterdir()
 
-            if file.is_file()
+            if (
+                file.is_file()
+                and file.suffix.lower() in ALL_EXTENSIONS
+            )
+
         }
 
 
-        # Detect changes
+        # ======================================
+        # DETECT NEW/CHANGED MEDIA
+        # ======================================
 
         if current_files != new_files:
 
             print()
+
             print("📸 New media detected!")
+
+            print()
+
+
+            # Update website
 
             create_website()
 
+
+            # Push to GitHub
+
             push_to_github()
+
 
             print()
 
@@ -494,6 +662,7 @@ while True:
     except KeyboardInterrupt:
 
         print()
+
         print("Automation stopped.")
 
         break
@@ -502,9 +671,13 @@ while True:
     except Exception as error:
 
         print()
+
         print("ERROR:")
+
         print(error)
 
         print()
+
+        print("Trying again in 10 seconds...")
 
         time.sleep(10)
