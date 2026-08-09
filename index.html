@@ -1,163 +1,1803 @@
-```html
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>My Gallery</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Cine Gallery</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f0f0f;
-            color: white;
-            min-height: 100vh;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        /* Header */
+body {
 
-        header {
-            text-align: center;
-            padding: 50px 20px 30px;
-        }
+    font-family: Arial, sans-serif;
 
-        header h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #0f0f0f,
+            #1b1b1b
+        );
 
-        header p {
-            color: #999;
-            font-size: 16px;
-        }
+    color: white;
 
-        /* Gallery */
+    min-height: 100vh;
+}
 
-        .gallery {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
 
-            display: grid;
+/* HEADER */
 
-            grid-template-columns:
-                repeat(auto-fit, minmax(280px, 1fr));
+header {
 
-            gap: 25px;
+    text-align: center;
 
-            padding-bottom: 50px;
-        }
+    padding: 60px 20px 40px;
 
-        /* Image card */
+}
 
-        .card {
-            background: #1a1a1a;
-            border-radius: 18px;
-            padding: 10px;
+header h1 {
 
-            overflow: hidden;
+    font-size: 48px;
 
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
+    letter-spacing: 2px;
 
-        .card:hover {
-            transform: translateY(-8px);
+    margin-bottom: 12px;
 
-            box-shadow:
-                0 15px 40px rgba(0, 0, 0, 0.5);
-        }
+}
 
-        .card img {
-            width: 100%;
-            height: 350px;
+header p {
 
-            object-fit: cover;
+    color: #999;
 
-            border-radius: 12px;
+    font-size: 17px;
 
-            display: block;
-        }
+}
 
-        /* Footer */
 
-        footer {
-            text-align: center;
-            padding: 25px;
+/* GALLERY */
 
-            color: #666;
-            font-size: 14px;
-        }
+.gallery {
 
-        /* Mobile */
+    width: 92%;
 
-        @media (max-width: 600px) {
+    max-width: 1400px;
 
-            header h1 {
-                font-size: 32px;
-            }
+    margin: auto;
 
-            .gallery {
-                width: 94%;
-                grid-template-columns: 1fr;
-            }
+    display: grid;
 
-            .card img {
-                height: auto;
-            }
-        }
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(280px, 1fr)
+        );
 
-    </style>
+    gap: 25px;
+
+    padding-bottom: 60px;
+
+}
+
+
+/* CARD */
+
+.card {
+
+    background: #191919;
+
+    border-radius: 18px;
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+.card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.6);
+
+}
+
+
+/* MEDIA */
+
+.card img,
+.card video {
+
+    width: 100%;
+
+    height: 380px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    display: block;
+
+}
+
+
+/* FOOTER */
+
+footer {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #666;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    header h1 {
+
+        font-size: 34px;
+
+    }
+
+    .gallery {
+
+        width: 94%;
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .card img,
+    .card video {
+
+        height: auto;
+
+    }
+
+}
+
+</style>
 
 </head>
 
 
 <body>
 
-    <header>
 
-        <h1>My Gallery</h1>
+<header>
 
-        <p>A collection of my favorite moments</p>
+<h1>🎬 Cine Gallery</h1>
 
-    </header>
+<p>My collection of photos and videos</p>
 
-
-    <main class="gallery">
-
-        <div class="card">
-
-            <!-- CHANGE THIS FILE NAME -->
-
-            <img
-                src="media/photo1.jpg"
-                alt="Gallery Image"
-            >
-
-        </div>
-
-    </main>
+</header>
 
 
-    <footer>
+<main class="gallery">
 
-        © 2026 My Gallery
 
-    </footer>
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/3949897797024512168.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/758518242_18580071877071855_3846182736683844428_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/759986984_18116782652484637_4682205668853800192_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/761375750_18116530760484637_931486884404333885_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/763355708_18116921534484637_6397802194979456873_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/763487377_18117361682484637_557398657164045554_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQM5t7T6WUZDVRvqh2H-HRd9u-GsBu67Q9ihajdtrMzboLiBzWNck_VlIpTJGJsNj__95LAMtPuTxAFAlG7TbCy_POGOB11cINhJuDk.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQMUGXlYBVQneGVSFcsol3F8GweK2j3_vdmbpw0OtkVkmIp3a3kZO3qgFf7oaj-0n6Ba1WvMipzviBOCsAunk2fQwNcbsw-HF4F_q-o.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQNeDlt5nn9hfw_SNDVzN0ofewalgJkfywyYIgS8ik6gMqzIw8gzZcWfDoTKECI0LX2t-Sovl8GHfPZB-rqZ_MzU4VxrAK3IPtuJznk.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQNf6SonJOk8RcoiKzwTCMU7qZX3nMlGQgqn6Mt45M1j0lx4JGmcT33kgSwNmSdmrhiOOYEFdqi0er-HGYOjD-EeUgal1LUd11wdeHA.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQNM5M_cugKgJTSXfZXK1ObtvzUPxLB7wmxFC7n97BgJ4MlIE3t9RPCaPkK1iVUbbxAY_UZU9w0DZ8ee4xctrhF3U9VUUXZL3rVo3SI.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQNoGoadwkR6c5gcR8rhHEnpnP6Jm2ogFKBYlx8-gHVTyU9XRBRYUQdg5qTd2MbEYp2FcAW4sAd9Odx3dlx49eL9rlc0vXSFAWA-KtE.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQOe_RETfkymzu5nkKBuJmqrub7NpwNhK-EZuBBS44PnyJUbcC4aQr81t4VInrvupsgITb6jT5wR-mJpZ9kiG70q1hET5AqzbgVqo4o.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQOJ0kTDlE9I2onlgVxt2Jw8qeNSO0c-1NCTqXW91NlMbK9q_c4SL1eTt--TO9vT3f6SrZRWCsJu91rX9Cab-0AD8eHBvHSXJ2dkZOs.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQOPorFd8VxxHxMfiX3G2K73V_kGFxSK0g4VWgZshZiai5cXbDYAyv8tU7ozw-71zbypfjOrN4LXYWN6nq07crFAKqf1N9JEQZ94KCo.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQPsoE8k5YHJGlvtDhOumc30n0i-_lGywBTOT3-37EOTWyEen414JErQUNtShdf7fS76S7myixlBQfjErQZwVMThK8IWb0TEuFcW5qQ.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/AQPVyJXUh5LDTCdCMzJTwbp75jzlHkKPpoh-hAMrp5CzABzFfUt9YK9Mv-Lg1tlGxZE9LykCkKHpjcjFUavjjgSxdgVhET1ZQKv821M.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T08-55-38.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/btwitslucky.1-2026-07-29T09-51-58.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-24-54.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-25-02.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-25-12.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-26-28.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-26-37.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-26-47.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-27-02.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-27-11.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-27-58.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-28-07.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-28-18.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-28-30.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-28-47.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-29-17.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-29-26.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-29-37.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-30-02.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-30-14.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-30-37.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-31-24.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-31-33.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-31-44.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-31-54.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-32-04.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-32-25.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-32-36.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-32-48.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/btwitslucky.1-2026-07-29T20-33-05.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_28_12%20PM.png"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_35_16%20PM.png"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/Dolphin_Radar_20260728185105.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/Dolphin_Radar_20260728185113.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/Dolphin_Radar_20260728185119.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/Dolphin_Radar_20260728185153.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/Dolphin_Radar_20260728185159.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/ezgif-frame-097.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/ezgif-frame-098.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/mr.faisalshaikh-2026-07-31T20-17-02%20%281%29.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/mr.faisalshaikh-2026-07-31T20-17-02.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/nickstermann-2026-07-29T06-08-59.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/nickstermann-2026-07-30T00-11-08.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/nickstermann-2026-07-30T00-44-13.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/photo1.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/prabhjyott-2026-07-30T10-41-00.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/prabhjyott-2026-07-30T10-41-50.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/prabhjyott-2026-07-30T10-47-03.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/prabhjyott-2026-07-31T04-43-11%20%281%29.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/prabhjyott-2026-07-31T04-43-11.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/SaveClip.App_758542833_18423140014176310_3526740350525280801_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/SaveClip.App_760701872_18071344802710201_6325784018369693438_n.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/SaveClip.App_AQMvq8iKUOlYkR2gHQ7GKxxxO9YcKg7BBRqV24NT9mALA80g-Sm9hw7B0fHGp0A6fyv2kQ_yIUbF4K2JUt9JF81R8E8lsHWVfS6djKQ.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/SaveClip.App_AQOA_qIhBDMJWeSJXbi3wchxZY0lZMfJKHnjmXaYapRrm8aUxFVejR-azMz-GoGB0Sl5g9e6fQYZKuJdQzgwd4_0hbbc0TEucjA1V6c.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-akash_dinesh_prabhu-Video-1785767435269.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-akash_dinesh_prabhu-Video-1785894256646.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002700895.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002707194.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002713546.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-allensthetics-Video-1785767561827.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-alwaysramcharan-Video-1785946310171.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-alwaysramcharan-Video-1785946314644.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-arthur.fils-Video-1785946277865.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785679491611.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785679496684.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785679505781.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785767490421.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785767496858.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785767502392.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785767507920.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1785894295869.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1786002756333.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-biharibeast_27-Video-1786002763215.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1785480212824.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1785894223707.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1785894228489.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1786002648045.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1786002654673.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1786002659595.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-jump_dhanush-Video-1786002664032.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-s.r.i.p.a.v.a.n-Video-1785679549840.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-s.r.i.p.a.v.a.n-Video-1785679555024.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-swat_0026-Video-1786002792619.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-the_pavaan-Video-1785767459280.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-the_pavaan-Video-1785767463472.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-vaibhav_s63-Video-1785894332384.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-weak_teen-Video-1785480176309.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/StorySaver.net-weak_teen-Video-1785480184685.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/tarunkinra07-2026-07-29T18-54-54%20%281%29.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/tarunkinra07-2026-07-29T18-54-54%20%282%29.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/tarunkinra07-2026-07-29T18-54-54%20%283%29.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<video controls preload="metadata">
+
+<source
+    src="media/tarunkinra07-2026-07-29T18-54-54.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-55-42.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-55-45.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-04.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-07.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-10.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-13.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-21.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-45.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-51.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-56-54.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-57-00.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-57-02.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+<div class="card">
+
+<img
+    src="media/tarunkinra07-2026-07-29T18-57-04.jpg"
+    alt="Gallery Image"
+    loading="lazy">
+
+</div>
+
+
+
+</main>
+
+
+<footer>
+
+© 2026 Cine Gallery
+
+</footer>
+
 
 </body>
 
 </html>
-```
