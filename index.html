@@ -1,18 +1,163 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
 
-    <title>My Media Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Gallery</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f0f0f;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Header */
+
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* Gallery */
+
+        .gallery {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+
+            padding-bottom: 50px;
+        }
+
+        /* Image card */
+
+        .card {
+            background: #1a1a1a;
+            border-radius: 18px;
+            padding: 10px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card img {
+            width: 100%;
+            height: 350px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            display: block;
+        }
+
+        /* Footer */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 32px;
+            }
+
+            .gallery {
+                width: 94%;
+                grid-template-columns: 1fr;
+            }
+
+            .card img {
+                height: auto;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <h1>My Media Gallery</h1>
+    <header>
 
-    <img src="media/photo1.jpg" width="500">
+        <h1>My Gallery</h1>
+
+        <p>A collection of my favorite moments</p>
+
+    </header>
+
+
+    <main class="gallery">
+
+        <div class="card">
+
+            <!-- CHANGE THIS FILE NAME -->
+
+            <img
+                src="media/YOUR_IMAGE_NAME.jpg"
+                alt="Gallery Image"
+            >
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        © 2026 My Gallery
+
+    </footer>
 
 </body>
 
 </html>
+```
