@@ -15,6 +15,9 @@
 
 <style>
 
+/* ==========================================
+   GENERAL
+   ========================================== */
 
 * {
     margin: 0;
@@ -22,17 +25,11 @@
     box-sizing: border-box;
 }
 
-
 body {
 
     font-family: Arial, sans-serif;
 
-    background:
-        linear-gradient(
-            135deg,
-            #0f0f0f,
-            #1b1b1b
-        );
+    background: #0f0f0f;
 
     color: white;
 
@@ -42,70 +39,135 @@ body {
 
 
 /* ==========================================
-   HEADER
+   SIDEBAR
    ========================================== */
 
-header {
+.sidebar {
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 230px;
+
+    height: 100vh;
+
+    background: #151515;
+
+    border-right: 1px solid #292929;
+
+    padding: 30px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* LOGO */
+
+.logo {
 
     text-align: center;
 
-    padding: 60px 20px 40px;
+    margin-bottom: 40px;
 
 }
 
+.logo h1 {
 
-header h1 {
+    font-size: 27px;
 
-    font-size: 48px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
 }
 
+.logo p {
 
-header p {
+    color: #777;
 
-    color: #999;
-
-    font-size: 17px;
+    font-size: 12px;
 
 }
 
 
 /* ==========================================
-   POST COUNT
+   NAVIGATION
+   ========================================== */
+
+.nav button {
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #999;
+
+    padding: 14px 16px;
+
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+
+.nav button:hover {
+
+    background: #222;
+
+    color: white;
+
+}
+
+
+.nav button.active {
+
+    background: #2a2a2a;
+
+    color: white;
+
+}
+
+
+/* ==========================================
+   STATS
    ========================================== */
 
 .stats {
 
-    display: flex;
+    margin-top: auto;
 
-    justify-content: center;
+    border-top: 1px solid #292929;
 
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-    margin-top: 20px;
+    padding-top: 20px;
 
 }
 
 
 .stat {
 
-    display: inline-block;
+    display: flex;
 
-    padding: 9px 18px;
+    justify-content: space-between;
 
-    border-radius: 30px;
+    padding: 8px 5px;
 
-    background: #222;
+    color: #777;
 
-    color: #aaa;
-
-    font-size: 14px;
+    font-size: 13px;
 
 }
 
@@ -114,7 +176,41 @@ header p {
 
     color: white;
 
-    font-size: 16px;
+}
+
+
+/* ==========================================
+   MAIN CONTENT
+   ========================================== */
+
+.main {
+
+    margin-left: 230px;
+
+    padding: 45px;
+
+}
+
+
+/* HEADER */
+
+.page-header {
+
+    margin-bottom: 35px;
+
+}
+
+.page-header h2 {
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+
+}
+
+.page-header p {
+
+    color: #777;
 
 }
 
@@ -125,90 +221,63 @@ header p {
 
 .gallery {
 
-    width: 92%;
-
-    max-width: 1400px;
-
-    margin: auto;
-
     display: grid;
 
     grid-template-columns:
         repeat(
-            auto-fit,
+            auto-fill,
             minmax(280px, 1fr)
         );
 
-    gap: 25px;
-
-    padding-bottom: 60px;
+    gap: 22px;
 
 }
 
 
-/* ==========================================
-   CARD
-   ========================================== */
+/* CARD */
 
 .card {
 
-    background: #191919;
+    background: #181818;
 
-    border-radius: 18px;
+    padding: 8px;
 
-    padding: 10px;
+    border-radius: 16px;
 
     overflow: hidden;
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 
 }
 
 
 .card:hover {
 
-    transform: translateY(-8px);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 20px 50px
-        rgba(0, 0, 0, 0.6);
+        0 15px 40px
+        rgba(0, 0, 0, 0.5);
 
 }
 
 
-/* ==========================================
-   IMAGE / VIDEO
-   ========================================== */
+/* MEDIA */
 
 .card img,
 .card video {
 
     width: 100%;
 
-    height: 380px;
+    height: 350px;
 
     object-fit: cover;
 
-    border-radius: 12px;
-
     display: block;
 
-}
-
-
-/* ==========================================
-   FOOTER
-   ========================================== */
-
-footer {
-
-    text-align: center;
-
-    padding: 30px;
-
-    color: #666;
+    border-radius: 11px;
 
 }
 
@@ -217,31 +286,73 @@ footer {
    MOBILE
    ========================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
-    header h1 {
+    .sidebar {
 
-        font-size: 34px;
+        width: 75px;
+
+        padding: 20px 8px;
+
+    }
+
+    .logo h1 {
+
+        font-size: 0;
+
+    }
+
+    .logo h1::after {
+
+        content: "🎬";
+
+        font-size: 25px;
+
+    }
+
+    .logo p {
+
+        display: none;
+
+    }
+
+    .nav button {
+
+        text-align: center;
+
+        padding: 13px 5px;
+
+        font-size: 0;
+
+    }
+
+    .nav button::first-letter {
+
+        font-size: 20px;
+
+    }
+
+    .stats {
+
+        display: none;
+
+    }
+
+    .main {
+
+        margin-left: 75px;
+
+        padding: 25px 15px;
 
     }
 
     .gallery {
 
-        width: 94%;
-
         grid-template-columns: 1fr;
 
     }
 
-    .card img,
-    .card video {
-
-        height: auto;
-
-    }
-
 }
-
 
 </style>
 
@@ -252,48 +363,112 @@ footer {
 
 
 <!-- ==========================================
-     HEADER
+     SIDEBAR
      ========================================== -->
 
-<header>
+<aside class="sidebar">
+
+
+<div class="logo">
 
 <h1>🎬 Cine Gallery</h1>
 
-<p>My collection of photos and videos</p>
-
-
-<div class="stats">
-
-    <div class="stat">
-        <strong>126</strong> Posts
-    </div>
-
-    <div class="stat">
-        <strong>60</strong> Photos
-    </div>
-
-    <div class="stat">
-        <strong>66</strong> Videos
-    </div>
+<p>My Collection</p>
 
 </div>
 
 
-</header>
+<div class="nav">
+
+<button
+    class="active"
+    onclick="showMedia('all', this)">
+
+🏠 &nbsp; All Posts
+
+</button>
+
+
+<button
+    onclick="showMedia('image', this)">
+
+🖼️ &nbsp; Images
+
+</button>
+
+
+<button
+    onclick="showMedia('video', this)">
+
+🎥 &nbsp; Videos
+
+</button>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<span>Posts</span>
+
+<strong>126</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>Images</span>
+
+<strong>60</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>Videos</span>
+
+<strong>66</strong>
+
+</div>
+
+</div>
+
+
+</aside>
 
 
 <!-- ==========================================
-     GALLERY
+     MAIN
      ========================================== -->
 
-<main class="gallery">
+<main class="main">
 
 
-<div class="card">
+<div class="page-header">
 
-<video
-    controls
-    preload="metadata">
+<h2 id="pageTitle">
+All Posts
+</h2>
+
+<p id="pageDescription">
+All photos and videos
+</p>
+
+</div>
+
+
+<div class="gallery" id="gallery">
+
+
+<div class="card media-video">
+
+<video controls preload="metadata">
 
 <source
     src="media/3949897797024512168.mp4">
@@ -306,7 +481,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/758518242_18580071877071855_3846182736683844428_n.jpg"
@@ -317,7 +492,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/759986984_18116782652484637_4682205668853800192_n.jpg"
@@ -328,7 +503,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/761375750_18116530760484637_931486884404333885_n.jpg"
@@ -339,7 +514,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/763355708_18116921534484637_6397802194979456873_n.jpg"
@@ -350,7 +525,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/763487377_18117361682484637_557398657164045554_n.jpg"
@@ -361,11 +536,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQM5t7T6WUZDVRvqh2H-HRd9u-GsBu67Q9ihajdtrMzboLiBzWNck_VlIpTJGJsNj__95LAMtPuTxAFAlG7TbCy_POGOB11cINhJuDk.mp4">
@@ -378,11 +551,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQMHC8bZJsqtWKVh0RZC_rEdYl1P5ssbVXDpdIrzc0OPm2ZMx9iJqd5odEv9fytHUud2kL3dJfIRDkq6H2kPH-oVZlM2fuxmUzPpPok.mp4">
@@ -395,11 +566,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQMUGXlYBVQneGVSFcsol3F8GweK2j3_vdmbpw0OtkVkmIp3a3kZO3qgFf7oaj-0n6Ba1WvMipzviBOCsAunk2fQwNcbsw-HF4F_q-o.mp4">
@@ -412,11 +581,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQNeDlt5nn9hfw_SNDVzN0ofewalgJkfywyYIgS8ik6gMqzIw8gzZcWfDoTKECI0LX2t-Sovl8GHfPZB-rqZ_MzU4VxrAK3IPtuJznk.mp4">
@@ -429,11 +596,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQNf6SonJOk8RcoiKzwTCMU7qZX3nMlGQgqn6Mt45M1j0lx4JGmcT33kgSwNmSdmrhiOOYEFdqi0er-HGYOjD-EeUgal1LUd11wdeHA.mp4">
@@ -446,11 +611,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQNM5M_cugKgJTSXfZXK1ObtvzUPxLB7wmxFC7n97BgJ4MlIE3t9RPCaPkK1iVUbbxAY_UZU9w0DZ8ee4xctrhF3U9VUUXZL3rVo3SI.mp4">
@@ -463,11 +626,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQNoGoadwkR6c5gcR8rhHEnpnP6Jm2ogFKBYlx8-gHVTyU9XRBRYUQdg5qTd2MbEYp2FcAW4sAd9Odx3dlx49eL9rlc0vXSFAWA-KtE.mp4">
@@ -480,11 +641,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQOe_RETfkymzu5nkKBuJmqrub7NpwNhK-EZuBBS44PnyJUbcC4aQr81t4VInrvupsgITb6jT5wR-mJpZ9kiG70q1hET5AqzbgVqo4o.mp4">
@@ -497,11 +656,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQOFht5obhnoxa-b0gBjWD-IThaTtVVWofL-EUQ4YE36nJX3BonGrsr2o21mB01iPfPRQwrPfiyjufU0K-A7F-qk0VYrbla7pnmqJ3k.mp4">
@@ -514,11 +671,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQOJ0kTDlE9I2onlgVxt2Jw8qeNSO0c-1NCTqXW91NlMbK9q_c4SL1eTt--TO9vT3f6SrZRWCsJu91rX9Cab-0AD8eHBvHSXJ2dkZOs.mp4">
@@ -531,11 +686,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQOKb0FAk4TfVzftzsHen1OvFWw1mqiwiUpulPu287QwunWnLg4pQ8Xr0hDnRds8dwvcrTnM2W46RXA67smtE2BVHtewMioodcf1sOM.mp4">
@@ -548,11 +701,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQOPorFd8VxxHxMfiX3G2K73V_kGFxSK0g4VWgZshZiai5cXbDYAyv8tU7ozw-71zbypfjOrN4LXYWN6nq07crFAKqf1N9JEQZ94KCo.mp4">
@@ -565,11 +716,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQP27PVCVE7nEhlaCUYJJEjcyiunUkgxVDDMb3oGXNWg_cswft02wmVfgzD5ci24GcDLscCeB1WGO-kx2semyY9W07oDcmpKLV7GKYo.mp4">
@@ -582,11 +731,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQPsoE8k5YHJGlvtDhOumc30n0i-_lGywBTOT3-37EOTWyEen414JErQUNtShdf7fS76S7myixlBQfjErQZwVMThK8IWb0TEuFcW5qQ.mp4">
@@ -599,11 +746,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/AQPVyJXUh5LDTCdCMzJTwbp75jzlHkKPpoh-hAMrp5CzABzFfUt9YK9Mv-Lg1tlGxZE9LykCkKHpjcjFUavjjgSxdgVhET1ZQKv821M.mp4">
@@ -616,7 +761,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T08-55-38.jpg"
@@ -627,11 +772,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/btwitslucky.1-2026-07-29T09-51-58.mp4">
@@ -644,7 +787,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-24-54.jpg"
@@ -655,7 +798,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-25-02.jpg"
@@ -666,7 +809,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-25-12.jpg"
@@ -677,7 +820,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-28.jpg"
@@ -688,7 +831,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-37.jpg"
@@ -699,7 +842,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-26-47.jpg"
@@ -710,7 +853,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-02.jpg"
@@ -721,7 +864,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-11.jpg"
@@ -732,7 +875,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-27-58.jpg"
@@ -743,7 +886,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-07.jpg"
@@ -754,7 +897,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-18.jpg"
@@ -765,7 +908,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-30.jpg"
@@ -776,7 +919,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-28-47.jpg"
@@ -787,7 +930,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-17.jpg"
@@ -798,7 +941,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-26.jpg"
@@ -809,7 +952,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-29-37.jpg"
@@ -820,7 +963,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-02.jpg"
@@ -831,7 +974,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-14.jpg"
@@ -842,7 +985,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-30-37.jpg"
@@ -853,7 +996,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-24.jpg"
@@ -864,7 +1007,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-33.jpg"
@@ -875,7 +1018,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-44.jpg"
@@ -886,7 +1029,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-31-54.jpg"
@@ -897,7 +1040,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-04.jpg"
@@ -908,7 +1051,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-25.jpg"
@@ -919,7 +1062,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-36.jpg"
@@ -930,7 +1073,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-32-48.jpg"
@@ -941,7 +1084,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/btwitslucky.1-2026-07-29T20-33-05.jpg"
@@ -952,7 +1095,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_28_12%20PM.png"
@@ -963,7 +1106,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/ChatGPT%20Image%20Jul%2031%2C%202026%2C%2001_35_16%20PM.png"
@@ -974,11 +1117,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/Dolphin_Radar_20260728185105.mp4">
@@ -991,11 +1132,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/Dolphin_Radar_20260728185113.mp4">
@@ -1008,11 +1147,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/Dolphin_Radar_20260728185119.mp4">
@@ -1025,11 +1162,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/Dolphin_Radar_20260728185153.mp4">
@@ -1042,11 +1177,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/Dolphin_Radar_20260728185159.mp4">
@@ -1059,7 +1192,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/ezgif-frame-097.jpg"
@@ -1070,7 +1203,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/ezgif-frame-098.jpg"
@@ -1081,11 +1214,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/mr.faisalshaikh-2026-07-31T20-17-02%20%281%29.mp4">
@@ -1098,11 +1229,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/mr.faisalshaikh-2026-07-31T20-17-02.mp4">
@@ -1115,7 +1244,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/nickstermann-2026-07-29T06-08-59.jpg"
@@ -1126,7 +1255,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/nickstermann-2026-07-30T00-11-08.jpg"
@@ -1137,7 +1266,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/nickstermann-2026-07-30T00-44-13.jpg"
@@ -1148,7 +1277,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/photo1.jpg"
@@ -1159,7 +1288,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/prabhjyott-2026-07-30T10-41-00.jpg"
@@ -1170,7 +1299,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/prabhjyott-2026-07-30T10-41-50.jpg"
@@ -1181,7 +1310,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/prabhjyott-2026-07-30T10-47-03.jpg"
@@ -1192,11 +1321,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/prabhjyott-2026-07-31T04-43-11%20%281%29.mp4">
@@ -1209,11 +1336,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/prabhjyott-2026-07-31T04-43-11.mp4">
@@ -1226,7 +1351,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/SaveClip.App_758542833_18423140014176310_3526740350525280801_n.jpg"
@@ -1237,7 +1362,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/SaveClip.App_760701872_18071344802710201_6325784018369693438_n.jpg"
@@ -1248,11 +1373,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/SaveClip.App_AQMvq8iKUOlYkR2gHQ7GKxxxO9YcKg7BBRqV24NT9mALA80g-Sm9hw7B0fHGp0A6fyv2kQ_yIUbF4K2JUt9JF81R8E8lsHWVfS6djKQ.mp4">
@@ -1265,11 +1388,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/SaveClip.App_AQOA_qIhBDMJWeSJXbi3wchxZY0lZMfJKHnjmXaYapRrm8aUxFVejR-azMz-GoGB0Sl5g9e6fQYZKuJdQzgwd4_0hbbc0TEucjA1V6c.mp4">
@@ -1282,11 +1403,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-akash_dinesh_prabhu-Video-1785767435269.mp4">
@@ -1299,11 +1418,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-akash_dinesh_prabhu-Video-1785894256646.mp4">
@@ -1316,11 +1433,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002700895.mp4">
@@ -1333,11 +1448,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002707194.mp4">
@@ -1350,11 +1463,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-akash_dinesh_prabhu-Video-1786002713546.mp4">
@@ -1367,11 +1478,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-allensthetics-Video-1785767561827.mp4">
@@ -1384,11 +1493,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-alwaysramcharan-Video-1785946310171.mp4">
@@ -1401,11 +1508,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-alwaysramcharan-Video-1785946314644.mp4">
@@ -1418,11 +1523,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-arthur.fils-Video-1785946277865.mp4">
@@ -1435,11 +1538,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785679491611.mp4">
@@ -1452,11 +1553,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785679496684.mp4">
@@ -1469,11 +1568,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785679505781.mp4">
@@ -1486,11 +1583,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785767490421.mp4">
@@ -1503,11 +1598,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785767496858.mp4">
@@ -1520,11 +1613,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785767502392.mp4">
@@ -1537,11 +1628,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785767507920.mp4">
@@ -1554,11 +1643,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1785894295869.mp4">
@@ -1571,11 +1658,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1786002756333.mp4">
@@ -1588,11 +1673,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-biharibeast_27-Video-1786002763215.mp4">
@@ -1605,11 +1688,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1785480212824.mp4">
@@ -1622,11 +1703,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1785894223707.mp4">
@@ -1639,11 +1718,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1785894228489.mp4">
@@ -1656,11 +1733,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1786002648045.mp4">
@@ -1673,11 +1748,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1786002654673.mp4">
@@ -1690,11 +1763,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1786002659595.mp4">
@@ -1707,11 +1778,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-jump_dhanush-Video-1786002664032.mp4">
@@ -1724,11 +1793,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-s.r.i.p.a.v.a.n-Video-1785679549840.mp4">
@@ -1741,11 +1808,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-s.r.i.p.a.v.a.n-Video-1785679555024.mp4">
@@ -1758,11 +1823,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-swat_0026-Video-1786002792619.mp4">
@@ -1775,11 +1838,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-the_pavaan-Video-1785767459280.mp4">
@@ -1792,11 +1853,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-the_pavaan-Video-1785767463472.mp4">
@@ -1809,11 +1868,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-vaibhav_s63-Video-1785894332384.mp4">
@@ -1826,11 +1883,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-weak_teen-Video-1785480176309.mp4">
@@ -1843,11 +1898,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/StorySaver.net-weak_teen-Video-1785480184685.mp4">
@@ -1860,11 +1913,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/tarunkinra07-2026-07-29T18-54-54%20%281%29.mp4">
@@ -1877,11 +1928,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/tarunkinra07-2026-07-29T18-54-54%20%282%29.mp4">
@@ -1894,11 +1943,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/tarunkinra07-2026-07-29T18-54-54%20%283%29.mp4">
@@ -1911,11 +1958,9 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/tarunkinra07-2026-07-29T18-54-54.mp4">
@@ -1928,7 +1973,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-55-42.jpg"
@@ -1939,7 +1984,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-55-45.jpg"
@@ -1950,7 +1995,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-04.jpg"
@@ -1961,7 +2006,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-07.jpg"
@@ -1972,7 +2017,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-10.jpg"
@@ -1983,7 +2028,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-13.jpg"
@@ -1994,7 +2039,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-21.jpg"
@@ -2005,7 +2050,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-45.jpg"
@@ -2016,7 +2061,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-51.jpg"
@@ -2027,7 +2072,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-56-54.jpg"
@@ -2038,7 +2083,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-00.jpg"
@@ -2049,7 +2094,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-02.jpg"
@@ -2060,7 +2105,7 @@ Your browser does not support video.
 
 
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/tarunkinra07-2026-07-29T18-57-04.jpg"
@@ -2071,14 +2116,141 @@ Your browser does not support video.
 
 
 
+</div>
+
+
 </main>
 
 
-<footer>
+<script>
 
-© 2026 Cine Gallery
 
-</footer>
+function showMedia(type, button) {
+
+
+    // Get all cards
+
+    const cards =
+        document.querySelectorAll(".card");
+
+
+    // Remove active from buttons
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    // Activate clicked button
+
+    button.classList.add("active");
+
+
+    // Page title
+
+    const title =
+        document.getElementById("pageTitle");
+
+
+    const description =
+        document.getElementById("pageDescription");
+
+
+    // Show everything
+
+    if (type === "all") {
+
+
+        cards.forEach(card => {
+
+            card.style.display = "block";
+
+        });
+
+
+        title.innerText = "All Posts";
+
+        description.innerText =
+            "All photos and videos";
+
+    }
+
+
+    // Show images
+
+    else if (type === "image") {
+
+
+        cards.forEach(card => {
+
+            if (
+                card.classList.contains(
+                    "media-image"
+                )
+            ) {
+
+                card.style.display = "block";
+
+            }
+
+            else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        title.innerText = "Images";
+
+        description.innerText =
+            "My photo collection";
+
+    }
+
+
+    // Show videos
+
+    else if (type === "video") {
+
+
+        cards.forEach(card => {
+
+            if (
+                card.classList.contains(
+                    "media-video"
+                )
+            ) {
+
+                card.style.display = "block";
+
+            }
+
+            else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        title.innerText = "Videos";
+
+        description.innerText =
+            "My video collection";
+
+    }
+
+}
+
+
+</script>
 
 
 </body>
