@@ -6,7 +6,7 @@ from urllib.parse import quote
 
 
 # ==========================================
-# YOUR PATHS
+# PATHS
 # ==========================================
 
 REPO_FOLDER = r"C:\Users\Mahith Chowdary\Downloads\cine-gallery"
@@ -15,7 +15,7 @@ MEDIA_FOLDER = r"C:\Users\Mahith Chowdary\Downloads\cine-gallery\media"
 
 
 # ==========================================
-# SUPPORTED FILE TYPES
+# FILE TYPES
 # ==========================================
 
 IMAGE_EXTENSIONS = {
@@ -47,13 +47,17 @@ def create_website():
 
     for file in Path(MEDIA_FOLDER).iterdir():
 
-        if file.is_file() and file.suffix.lower() in ALL_EXTENSIONS:
+        if (
+            file.is_file()
+            and file.suffix.lower() in ALL_EXTENSIONS
+        ):
             files.append(file)
 
-    # Sort files alphabetically
     files.sort(key=lambda x: x.name.lower())
 
-    # Count images and videos
+
+    # Count media
+
     image_count = sum(
         1 for file in files
         if file.suffix.lower() in IMAGE_EXTENSIONS
@@ -68,7 +72,7 @@ def create_website():
 
 
     # ==========================================
-    # WEBSITE HTML
+    # START HTML
     # ==========================================
 
     html = f"""
@@ -88,6 +92,9 @@ def create_website():
 
 <style>
 
+/* ==========================================
+   GENERAL
+   ========================================== */
 
 * {{
     margin: 0;
@@ -95,17 +102,11 @@ def create_website():
     box-sizing: border-box;
 }}
 
-
 body {{
 
     font-family: Arial, sans-serif;
 
-    background:
-        linear-gradient(
-            135deg,
-            #0f0f0f,
-            #1b1b1b
-        );
+    background: #0f0f0f;
 
     color: white;
 
@@ -115,70 +116,135 @@ body {{
 
 
 /* ==========================================
-   HEADER
+   SIDEBAR
    ========================================== */
 
-header {{
+.sidebar {{
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 230px;
+
+    height: 100vh;
+
+    background: #151515;
+
+    border-right: 1px solid #292929;
+
+    padding: 30px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+}}
+
+
+/* LOGO */
+
+.logo {{
 
     text-align: center;
 
-    padding: 60px 20px 40px;
+    margin-bottom: 40px;
 
 }}
 
+.logo h1 {{
 
-header h1 {{
+    font-size: 27px;
 
-    font-size: 48px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
 }}
 
+.logo p {{
 
-header p {{
+    color: #777;
 
-    color: #999;
-
-    font-size: 17px;
+    font-size: 12px;
 
 }}
 
 
 /* ==========================================
-   POST COUNT
+   NAVIGATION
+   ========================================== */
+
+.nav button {{
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #999;
+
+    padding: 14px 16px;
+
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}}
+
+
+.nav button:hover {{
+
+    background: #222;
+
+    color: white;
+
+}}
+
+
+.nav button.active {{
+
+    background: #2a2a2a;
+
+    color: white;
+
+}}
+
+
+/* ==========================================
+   STATS
    ========================================== */
 
 .stats {{
 
-    display: flex;
+    margin-top: auto;
 
-    justify-content: center;
+    border-top: 1px solid #292929;
 
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-    margin-top: 20px;
+    padding-top: 20px;
 
 }}
 
 
 .stat {{
 
-    display: inline-block;
+    display: flex;
 
-    padding: 9px 18px;
+    justify-content: space-between;
 
-    border-radius: 30px;
+    padding: 8px 5px;
 
-    background: #222;
+    color: #777;
 
-    color: #aaa;
-
-    font-size: 14px;
+    font-size: 13px;
 
 }}
 
@@ -187,7 +253,41 @@ header p {{
 
     color: white;
 
-    font-size: 16px;
+}}
+
+
+/* ==========================================
+   MAIN CONTENT
+   ========================================== */
+
+.main {{
+
+    margin-left: 230px;
+
+    padding: 45px;
+
+}}
+
+
+/* HEADER */
+
+.page-header {{
+
+    margin-bottom: 35px;
+
+}}
+
+.page-header h2 {{
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+
+}}
+
+.page-header p {{
+
+    color: #777;
 
 }}
 
@@ -198,90 +298,63 @@ header p {{
 
 .gallery {{
 
-    width: 92%;
-
-    max-width: 1400px;
-
-    margin: auto;
-
     display: grid;
 
     grid-template-columns:
         repeat(
-            auto-fit,
+            auto-fill,
             minmax(280px, 1fr)
         );
 
-    gap: 25px;
-
-    padding-bottom: 60px;
+    gap: 22px;
 
 }}
 
 
-/* ==========================================
-   CARD
-   ========================================== */
+/* CARD */
 
 .card {{
 
-    background: #191919;
+    background: #181818;
 
-    border-radius: 18px;
+    padding: 8px;
 
-    padding: 10px;
+    border-radius: 16px;
 
     overflow: hidden;
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 
 }}
 
 
 .card:hover {{
 
-    transform: translateY(-8px);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 20px 50px
-        rgba(0, 0, 0, 0.6);
+        0 15px 40px
+        rgba(0, 0, 0, 0.5);
 
 }}
 
 
-/* ==========================================
-   IMAGE / VIDEO
-   ========================================== */
+/* MEDIA */
 
 .card img,
 .card video {{
 
     width: 100%;
 
-    height: 380px;
+    height: 350px;
 
     object-fit: cover;
 
-    border-radius: 12px;
-
     display: block;
 
-}}
-
-
-/* ==========================================
-   FOOTER
-   ========================================== */
-
-footer {{
-
-    text-align: center;
-
-    padding: 30px;
-
-    color: #666;
+    border-radius: 11px;
 
 }}
 
@@ -290,31 +363,73 @@ footer {{
    MOBILE
    ========================================== */
 
-@media (max-width: 600px) {{
+@media (max-width: 700px) {{
 
-    header h1 {{
+    .sidebar {{
 
-        font-size: 34px;
+        width: 75px;
+
+        padding: 20px 8px;
+
+    }}
+
+    .logo h1 {{
+
+        font-size: 0;
+
+    }}
+
+    .logo h1::after {{
+
+        content: "🎬";
+
+        font-size: 25px;
+
+    }}
+
+    .logo p {{
+
+        display: none;
+
+    }}
+
+    .nav button {{
+
+        text-align: center;
+
+        padding: 13px 5px;
+
+        font-size: 0;
+
+    }}
+
+    .nav button::first-letter {{
+
+        font-size: 20px;
+
+    }}
+
+    .stats {{
+
+        display: none;
+
+    }}
+
+    .main {{
+
+        margin-left: 75px;
+
+        padding: 25px 15px;
 
     }}
 
     .gallery {{
 
-        width: 94%;
-
         grid-template-columns: 1fr;
 
     }}
 
-    .card img,
-    .card video {{
-
-        height: auto;
-
-    }}
-
 }}
-
 
 </style>
 
@@ -325,67 +440,130 @@ footer {{
 
 
 <!-- ==========================================
-     HEADER
+     SIDEBAR
      ========================================== -->
 
-<header>
+<aside class="sidebar">
+
+
+<div class="logo">
 
 <h1>🎬 Cine Gallery</h1>
 
-<p>My collection of photos and videos</p>
-
-
-<div class="stats">
-
-    <div class="stat">
-        <strong>{post_count}</strong> Posts
-    </div>
-
-    <div class="stat">
-        <strong>{image_count}</strong> Photos
-    </div>
-
-    <div class="stat">
-        <strong>{video_count}</strong> Videos
-    </div>
+<p>My Collection</p>
 
 </div>
 
 
-</header>
+<div class="nav">
+
+<button
+    class="active"
+    onclick="showMedia('all', this)">
+
+🏠 &nbsp; All Posts
+
+</button>
+
+
+<button
+    onclick="showMedia('image', this)">
+
+🖼️ &nbsp; Images
+
+</button>
+
+
+<button
+    onclick="showMedia('video', this)">
+
+🎥 &nbsp; Videos
+
+</button>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<span>Posts</span>
+
+<strong>{post_count}</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>Images</span>
+
+<strong>{image_count}</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>Videos</span>
+
+<strong>{video_count}</strong>
+
+</div>
+
+</div>
+
+
+</aside>
 
 
 <!-- ==========================================
-     GALLERY
+     MAIN
      ========================================== -->
 
-<main class="gallery">
+<main class="main">
+
+
+<div class="page-header">
+
+<h2 id="pageTitle">
+All Posts
+</h2>
+
+<p id="pageDescription">
+All photos and videos
+</p>
+
+</div>
+
+
+<div class="gallery" id="gallery">
 """
 
 
     # ==========================================
-    # ADD ALL MEDIA AUTOMATICALLY
+    # ADD MEDIA
     # ==========================================
 
     for file in files:
 
         filename = file.name
 
-        # Safely encode filename for website URL
         url_filename = quote(filename)
 
         extension = file.suffix.lower()
 
 
-        # ======================================
         # IMAGE
-        # ======================================
 
         if extension in IMAGE_EXTENSIONS:
 
             html += f"""
 
-<div class="card">
+<div class="card media-image">
 
 <img
     src="media/{url_filename}"
@@ -397,19 +575,15 @@ footer {{
 """
 
 
-        # ======================================
         # VIDEO
-        # ======================================
 
         elif extension in VIDEO_EXTENSIONS:
 
             html += f"""
 
-<div class="card">
+<div class="card media-video">
 
-<video
-    controls
-    preload="metadata">
+<video controls preload="metadata">
 
 <source
     src="media/{url_filename}">
@@ -424,19 +598,146 @@ Your browser does not support video.
 
 
     # ==========================================
-    # CLOSE HTML
+    # JAVASCRIPT
     # ==========================================
 
     html += """
 
+</div>
+
+
 </main>
 
 
-<footer>
+<script>
 
-© 2026 Cine Gallery
 
-</footer>
+function showMedia(type, button) {
+
+
+    // Get all cards
+
+    const cards =
+        document.querySelectorAll(".card");
+
+
+    // Remove active from buttons
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    // Activate clicked button
+
+    button.classList.add("active");
+
+
+    // Page title
+
+    const title =
+        document.getElementById("pageTitle");
+
+
+    const description =
+        document.getElementById("pageDescription");
+
+
+    // Show everything
+
+    if (type === "all") {
+
+
+        cards.forEach(card => {
+
+            card.style.display = "block";
+
+        });
+
+
+        title.innerText = "All Posts";
+
+        description.innerText =
+            "All photos and videos";
+
+    }
+
+
+    // Show images
+
+    else if (type === "image") {
+
+
+        cards.forEach(card => {
+
+            if (
+                card.classList.contains(
+                    "media-image"
+                )
+            ) {
+
+                card.style.display = "block";
+
+            }
+
+            else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        title.innerText = "Images";
+
+        description.innerText =
+            "My photo collection";
+
+    }
+
+
+    // Show videos
+
+    else if (type === "video") {
+
+
+        cards.forEach(card => {
+
+            if (
+                card.classList.contains(
+                    "media-video"
+                )
+            ) {
+
+                card.style.display = "block";
+
+            }
+
+            else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        title.innerText = "Videos";
+
+        description.innerText =
+            "My video collection";
+
+    }
+
+}
+
+
+</script>
 
 
 </body>
@@ -469,7 +770,8 @@ Your browser does not support video.
     )
 
     print(
-        f"Photos: {image_count} | Videos: {video_count}"
+        f"Images: {image_count} | "
+        f"Videos: {video_count}"
     )
 
 
@@ -482,36 +784,23 @@ def push_to_github():
     os.chdir(REPO_FOLDER)
 
 
-    # ======================================
-    # ADD CHANGES
-    # ======================================
-
     subprocess.run(
         ["git", "add", "."],
         check=True
     )
 
 
-    # ======================================
-    # CHECK FOR CHANGES
-    # ======================================
-
     result = subprocess.run(
         ["git", "diff", "--cached", "--quiet"]
     )
 
 
-    # No changes
     if result.returncode == 0:
 
         print("No changes to push.")
 
         return
 
-
-    # ======================================
-    # COMMIT
-    # ======================================
 
     subprocess.run(
         [
@@ -523,10 +812,6 @@ def push_to_github():
         check=True
     )
 
-
-    # ======================================
-    # PUSH TO GITHUB
-    # ======================================
 
     subprocess.run(
         [
@@ -543,7 +828,7 @@ def push_to_github():
 
 
 # ==========================================
-# MAIN AUTOMATION
+# START
 # ==========================================
 
 print()
@@ -569,9 +854,7 @@ print("Press CTRL + C to stop.")
 print()
 
 
-# ==========================================
-# FIRST UPDATE
-# ==========================================
+# First update
 
 create_website()
 
@@ -579,18 +862,15 @@ push_to_github()
 
 
 # ==========================================
-# KEEP WATCHING
+# WATCH FOLDER
 # ==========================================
 
 while True:
 
     try:
 
-        # Check every 10 seconds
         time.sleep(10)
 
-
-        # Get current state of media folder
 
         current_files = {
 
@@ -603,18 +883,15 @@ while True:
 
             if (
                 file.is_file()
-                and file.suffix.lower() in ALL_EXTENSIONS
+                and file.suffix.lower()
+                in ALL_EXTENSIONS
             )
 
         }
 
 
-        # Wait a little
-
         time.sleep(2)
 
-
-        # Get new state
 
         new_files = {
 
@@ -627,15 +904,12 @@ while True:
 
             if (
                 file.is_file()
-                and file.suffix.lower() in ALL_EXTENSIONS
+                and file.suffix.lower()
+                in ALL_EXTENSIONS
             )
 
         }
 
-
-        # ======================================
-        # DETECT NEW/CHANGED MEDIA
-        # ======================================
 
         if current_files != new_files:
 
@@ -645,16 +919,9 @@ while True:
 
             print()
 
-
-            # Update website
-
             create_website()
 
-
-            # Push to GitHub
-
             push_to_github()
-
 
             print()
 
@@ -677,7 +944,5 @@ while True:
         print(error)
 
         print()
-
-        print("Trying again in 10 seconds...")
 
         time.sleep(10)
