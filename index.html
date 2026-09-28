@@ -13,7 +13,6 @@
 
 <title>Cine Gallery</title>
 
-
 <style>
 
 
@@ -106,6 +105,13 @@ body {
 /* =================================================
    NAVIGATION
    ================================================= */
+
+.nav {
+
+    overflow-y: auto;
+
+}
+
 
 .nav button {
 
@@ -330,11 +336,11 @@ body {
 
     background: #181818;
 
-    border: 1px solid #292929;
+    padding: 25px;
 
     border-radius: 16px;
 
-    padding: 30px 20px;
+    border: 1px solid #292929;
 
     cursor: pointer;
 
@@ -356,7 +362,7 @@ body {
 
 .folder-icon {
 
-    font-size: 48px;
+    font-size: 45px;
 
     margin-bottom: 15px;
 
@@ -369,7 +375,7 @@ body {
 
     font-weight: bold;
 
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 
 }
 
@@ -494,22 +500,26 @@ body {
 <button
     class="active"
     onclick="showSection('photos', this)">
+
     🖼️ &nbsp; Photos
+
 </button>
 
 
 <button
     onclick="showSection('videos', this)">
+
     🎥 &nbsp; Videos
+
 </button>
 
 
 
-        <button
-            onclick="showCustomFolder('chay', this)">
-            📁 chay
-        </button>
-        
+<button
+    onclick="showCustomFolder('chay', this)">
+    📁 chay
+</button>
+
 
 
 </div>
@@ -2825,8 +2835,7 @@ My photo collection
 
 <div
     id="videos"
-    style="display: none;">
-
+    style="display:none;">
 
 <div class="gallery">
 
@@ -6324,9 +6333,8 @@ Your browser does not support video.
 
 
 <!-- =================================================
-     CUSTOM FOLDERS
-     =================================================
--->
+     CUSTOM FOLDER
+     ================================================= -->
 
 <div
     id="customFolder"
@@ -6356,191 +6364,523 @@ const folderData = {
 
 "chay": `
 
-        <div class="folder-grid">
-        
-            <div
-                class="folder-card"
-                onclick="showCustomFolder('chay%2Fanr%20100%20years%20birthday')"
-            >
-                <div class="folder-icon">📁</div>
+<div class="folder-grid">
 
-                <div class="folder-name">
-                    anr 100 years birthday
-                </div>
+<div
+    class="folder-card"
+    onclick="showCustomFolder('chay%2Fanr%20100%20years%20birthday')"
+>
 
-                <div class="folder-count">
-                    3 items
-                </div>
-            </div>
-            
-            <div
-                class="folder-card"
-                onclick="showCustomFolder('chay%2Fbrihaspathis%20times%20business%20awards')"
-            >
-                <div class="folder-icon">📁</div>
+    <div class="folder-icon">
+        📁
+    </div>
 
-                <div class="folder-name">
-                    brihaspathis times business awards
-                </div>
+    <div class="folder-name">
+        anr 100 years birthday
+    </div>
 
-                <div class="folder-count">
-                    11 items
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="gallery">
-        
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/anr%20100%20years%20birthday/Naga%20Chaitanya%20and%20Amala%20at%20ANR%20100th%20Birthday%20celebrations%20%5BxuygakWTit0%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/anr%20100%20years%20birthday/Yuva%20Samrat%20Naga%20Chaitanya%20Makes%20His%20Presence%20at%20ANR%20100%20Years%20Celebrations%20%F0%9F%94%A5%F0%9F%98%8E%20%5BY2x-Ls4YW8A%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/anr%20100%20years%20birthday/%E0%B0%85%E0%B0%A8%E0%B1%8D%E0%B0%A8%20%E0%B0%A4%E0%B0%AE%E0%B1%8D%E0%B0%AE%E0%B1%81%E0%B0%A1%E0%B1%81%20%E0%B0%92%E0%B0%95%E0%B1%87%20%E0%B0%AB%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%AE%E0%B1%8D%20%E0%B0%B2%E0%B1%8B%F0%9F%91%8C%F0%9F%91%8CANR%20100%20years%20celebrations%20%23akkineninagarjuna%20%23akkineninageswararao%20%5Bep8lk_pETHo%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%5Bk3ViPIxSMP4%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200076%20%5BnC-f2n-cBUM%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200086%20%5BvecblJa3xls%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20be%20locked%20also%20%5BRAY09Bsd1lU%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20I%20learned%20a%20lot%20f%20%5Bnm_ixf3u260%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Hero%20%23nagachaitanya%20spotted%20at%20times%20business%20%23awards%202026%20%23tollywood%20%23viral%20%5B5xdDgBq4uRc%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Akkineni%20Massive%20Entry%20Visuals%20%EF%BD%9C%20%23nagachaitanya%20%23shorts%20%23viralvideo%20%23ytshorts%20%23yt%20%5BW5f9W3tLegg%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Naga%20chaitanya%20shocking%20emotional%20visuals%20receiving%20award...%EF%BC%9F%20%5B84UDQMFbIdM%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%20%EF%BD%9C%20%23nagachaitanya%20%EF%BD%9C%20%23vrushakarma%20%5B0PVNUdE2bUY%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%20snapped%20at%20Times%20bussiness%20awards%202026%F0%9F%98%8D%E2%9D%A4%EF%B8%8F%E2%80%8D%F0%9F%94%A5%20%23NagaChaitanya%20%23Chay%20%23Bheeshma%20%5BWK4gLcrMFgw%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%27s%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%21%20%F0%9F%98%8D%F0%9F%94%A5%20%5B9GF9_R09ujQ%5D.mp4">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                
-        </div>
-        
+    <div class="folder-count">
+        3 items
+    </div>
+
+</div>
+
+<div
+    class="folder-card"
+    onclick="showCustomFolder('chay%2Fbrihaspathis%20times%20business%20awards')"
+>
+
+    <div class="folder-icon">
+        📁
+    </div>
+
+    <div class="folder-name">
+        brihaspathis times business awards
+    </div>
+
+    <div class="folder-count">
+        11 items
+    </div>
+
+</div>
+
+</div>
+
+<div class="gallery">
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/Naga%20Chaitanya%20and%20Amala%20at%20ANR%20100th%20Birthday%20celebrations%20%5BxuygakWTit0%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/Yuva%20Samrat%20Naga%20Chaitanya%20Makes%20His%20Presence%20at%20ANR%20100%20Years%20Celebrations%20%F0%9F%94%A5%F0%9F%98%8E%20%5BY2x-Ls4YW8A%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/%E0%B0%85%E0%B0%A8%E0%B1%8D%E0%B0%A8%20%E0%B0%A4%E0%B0%AE%E0%B1%8D%E0%B0%AE%E0%B1%81%E0%B0%A1%E0%B1%81%20%E0%B0%92%E0%B0%95%E0%B1%87%20%E0%B0%AB%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%AE%E0%B1%8D%20%E0%B0%B2%E0%B1%8B%F0%9F%91%8C%F0%9F%91%8CANR%20100%20years%20celebrations%20%23akkineninagarjuna%20%23akkineninageswararao%20%5Bep8lk_pETHo%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%5Bk3ViPIxSMP4%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200076%20%5BnC-f2n-cBUM%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200086%20%5BvecblJa3xls%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20be%20locked%20also%20%5BRAY09Bsd1lU%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20I%20learned%20a%20lot%20f%20%5Bnm_ixf3u260%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Hero%20%23nagachaitanya%20spotted%20at%20times%20business%20%23awards%202026%20%23tollywood%20%23viral%20%5B5xdDgBq4uRc%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Akkineni%20Massive%20Entry%20Visuals%20%EF%BD%9C%20%23nagachaitanya%20%23shorts%20%23viralvideo%20%23ytshorts%20%23yt%20%5BW5f9W3tLegg%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20chaitanya%20shocking%20emotional%20visuals%20receiving%20award...%EF%BC%9F%20%5B84UDQMFbIdM%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%20%EF%BD%9C%20%23nagachaitanya%20%EF%BD%9C%20%23vrushakarma%20%5B0PVNUdE2bUY%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%20snapped%20at%20Times%20bussiness%20awards%202026%F0%9F%98%8D%E2%9D%A4%EF%B8%8F%E2%80%8D%F0%9F%94%A5%20%23NagaChaitanya%20%23Chay%20%23Bheeshma%20%5BWK4gLcrMFgw%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%27s%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%21%20%F0%9F%98%8D%F0%9F%94%A5%20%5B9GF9_R09ujQ%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+</div>
+
+`,
+
+"chay%2Fanr%20100%20years%20birthday": `
+
+<div class="gallery">
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/Naga%20Chaitanya%20and%20Amala%20at%20ANR%20100th%20Birthday%20celebrations%20%5BxuygakWTit0%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/Yuva%20Samrat%20Naga%20Chaitanya%20Makes%20His%20Presence%20at%20ANR%20100%20Years%20Celebrations%20%F0%9F%94%A5%F0%9F%98%8E%20%5BY2x-Ls4YW8A%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/anr%20100%20years%20birthday/%E0%B0%85%E0%B0%A8%E0%B1%8D%E0%B0%A8%20%E0%B0%A4%E0%B0%AE%E0%B1%8D%E0%B0%AE%E0%B1%81%E0%B0%A1%E0%B1%81%20%E0%B0%92%E0%B0%95%E0%B1%87%20%E0%B0%AB%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%AE%E0%B1%8D%20%E0%B0%B2%E0%B1%8B%F0%9F%91%8C%F0%9F%91%8CANR%20100%20years%20celebrations%20%23akkineninagarjuna%20%23akkineninageswararao%20%5Bep8lk_pETHo%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+</div>
+
+`,
+
+"chay%2Fbrihaspathis%20times%20business%20awards": `
+
+<div class="gallery">
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%5Bk3ViPIxSMP4%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200076%20%5BnC-f2n-cBUM%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%200086%20%5BvecblJa3xls%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20be%20locked%20also%20%5BRAY09Bsd1lU%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/BRIHASPATHI%E2%80%99s%20TIMES%20BUSINESS%20AWARDS%202026%20%F0%9F%8F%86%20%EF%BD%9C%2012th%20Edition%20%EF%BD%9C%20KTR%20%26%20Naga%20Chaitanya%20%E2%80%94%20I%20learned%20a%20lot%20f%20%5Bnm_ixf3u260%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Hero%20%23nagachaitanya%20spotted%20at%20times%20business%20%23awards%202026%20%23tollywood%20%23viral%20%5B5xdDgBq4uRc%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Akkineni%20Massive%20Entry%20Visuals%20%EF%BD%9C%20%23nagachaitanya%20%23shorts%20%23viralvideo%20%23ytshorts%20%23yt%20%5BW5f9W3tLegg%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20chaitanya%20shocking%20emotional%20visuals%20receiving%20award...%EF%BC%9F%20%5B84UDQMFbIdM%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Naga%20Chaitanya%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%20%EF%BD%9C%20%23nagachaitanya%20%EF%BD%9C%20%23vrushakarma%20%5B0PVNUdE2bUY%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%20snapped%20at%20Times%20bussiness%20awards%202026%F0%9F%98%8D%E2%9D%A4%EF%B8%8F%E2%80%8D%F0%9F%94%A5%20%23NagaChaitanya%20%23Chay%20%23Bheeshma%20%5BWK4gLcrMFgw%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="chay/brihaspathis%20times%20business%20awards/Yuvasamrat%20%23NagaChaitanya%27s%20Spotted%20at%20Brihaspathi%E2%80%99s%20Times%20Business%20Awards%202026%21%20%F0%9F%98%8D%F0%9F%94%A5%20%5B9GF9_R09ujQ%5D.mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+</div>
+
 `,
 
 };
 
 
 /* =================================================
-   SHOW NORMAL SECTION
+   SHOW PHOTOS / VIDEOS
    ================================================= */
 
 function showSection(section, button) {
@@ -6561,12 +6901,12 @@ function showSection(section, button) {
         document.getElementById("pageDescription");
 
 
-    // Hide custom folder
+    photos.style.display = "none";
+
+    videos.style.display = "none";
 
     customFolder.style.display = "none";
 
-
-    // Remove active state
 
     document
         .querySelectorAll(".nav button")
@@ -6577,20 +6917,20 @@ function showSection(section, button) {
         });
 
 
-    // Activate clicked button
+    if (button) {
 
-    button.classList.add("active");
+        button.classList.add("active");
+
+    }
 
 
-    // =================================================
-    // PHOTOS
-    // =================================================
+    /* ---------------------------------------------
+       PHOTOS
+       --------------------------------------------- */
 
     if (section === "photos") {
 
         photos.style.display = "block";
-
-        videos.style.display = "none";
 
         title.innerText = "Photos";
 
@@ -6600,13 +6940,11 @@ function showSection(section, button) {
     }
 
 
-    // =================================================
-    // VIDEOS
-    // =================================================
+    /* ---------------------------------------------
+       VIDEOS
+       --------------------------------------------- */
 
     if (section === "videos") {
-
-        photos.style.display = "none";
 
         videos.style.display = "block";
 
@@ -6624,7 +6962,10 @@ function showSection(section, button) {
    SHOW CUSTOM FOLDER
    ================================================= */
 
-function showCustomFolder(folderId, button = null) {
+function showCustomFolder(
+    folderId,
+    button = null
+) {
 
     const photos =
         document.getElementById("photos");
@@ -6645,6 +6986,10 @@ function showCustomFolder(folderId, button = null) {
         document.getElementById("pageDescription");
 
 
+    /* ---------------------------------------------
+       Hide normal sections
+       --------------------------------------------- */
+
     photos.style.display = "none";
 
     videos.style.display = "none";
@@ -6652,25 +6997,31 @@ function showCustomFolder(folderId, button = null) {
     customFolder.style.display = "block";
 
 
-    /*
-       Decode folder name
-    */
+    /* ---------------------------------------------
+       Get folder name
+       --------------------------------------------- */
 
     let decodedId = folderId;
 
+
     try {
 
-        decodedId = decodeURIComponent(folderId);
+        decodedId =
+            decodeURIComponent(folderId);
 
-    } catch (e) {
+    }
 
-        decodedId = folderId;
+    catch (error) {
+
+        decodedId =
+            folderId;
 
     }
 
 
     const parts =
         decodedId.split("/");
+
 
     const folderName =
         parts[parts.length - 1];
@@ -6684,32 +7035,34 @@ function showCustomFolder(folderId, button = null) {
         "Folder collection";
 
 
-    /*
+    /* ---------------------------------------------
        Show folder content
-    */
+       --------------------------------------------- */
 
     if (folderData[folderId]) {
 
         folderContent.innerHTML =
             folderData[folderId];
 
-    } else {
+    }
+
+    else {
 
         folderContent.innerHTML = `
-            <p style="
-                color:#777;
-                padding:20px 0;
-            ">
-                This folder is empty.
-            </p>
-        `;
+<p style="
+    color:#777;
+    padding:20px 0;
+">
+    This folder is empty.
+</p>
+`;
 
     }
 
 
-    /*
-       Sidebar active state
-    */
+    /* ---------------------------------------------
+       Active sidebar button
+       --------------------------------------------- */
 
     document
         .querySelectorAll(".nav button")
@@ -6728,10 +7081,6 @@ function showCustomFolder(folderId, button = null) {
 
 }
 
-
-/* =================================================
-   INITIAL
-   ================================================= */
 
 </script>
 
