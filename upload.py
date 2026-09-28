@@ -251,6 +251,7 @@ def create_website():
 <title>Cine Gallery</title>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 * {{
     margin: 0;
     padding: 0;
@@ -415,6 +416,67 @@ body {{
     color: #aaa;
 }}
 
+.folder-grid {{{{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}}}}
+
+.folder-card {{{{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    min-height: 105px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(139,92,246,.16), rgba(255,255,255,.035));
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    transition: .25s ease;
+    box-shadow: 0 12px 35px rgba(0,0,0,.18);
+}}
+
+.folder-card:hover {{{{
+    transform: translateY(-5px);
+    border-color: rgba(139,92,246,.45);
+    background: linear-gradient(145deg, rgba(139,92,246,.25), rgba(236,72,153,.08));
+    box-shadow: 0 18px 45px rgba(0,0,0,.30), 0 0 28px rgba(139,92,246,.10);
+}}}}
+
+.folder-icon {{{{
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: rgba(255,255,255,.08);
+    font-size: 25px;
+}}}}
+
+.folder-card-info {{{{
+    min-width: 0;
+}}}}
+
+.folder-card-name {{{{
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}}}}
+
+.folder-card-meta {{{{
+    color: #888;
+    font-size: 11px;
+    margin-top: 5px;
+}}}}
+
 .gallery {{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -540,6 +602,84 @@ body {{
         grid-template-columns: 1fr;
     }}
 }}
+
+/* ===== PREMIUM CINE GALLERY UI ===== */
+body {{{{
+    font-family: Inter, Arial, sans-serif;
+    background:
+        radial-gradient(circle at 15% 0%, rgba(139,92,246,.14), transparent 28%),
+        radial-gradient(circle at 95% 10%, rgba(236,72,153,.10), transparent 24%),
+        #07080c;
+}}}}
+
+.sidebar {{{{
+    background: rgba(9,10,15,.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,.08);
+}}}}
+
+.logo h1 {{{{
+    font-weight: 800;
+    letter-spacing: -.7px;
+    background: linear-gradient(135deg,#fff,#c4b5fd 55%,#f9a8d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}}}}
+
+.nav button, .folder-button {{{{
+    transition: .22s ease;
+}}}}
+
+.nav button:hover, .folder-button:hover {{{{
+    background: rgba(255,255,255,.055);
+    color: #fff;
+    transform: translateX(2px);
+}}}}
+
+.nav button.active, .folder-button.active {{{{
+    background: linear-gradient(135deg,rgba(139,92,246,.24),rgba(236,72,153,.10));
+    border-color: rgba(139,92,246,.32);
+    box-shadow: 0 0 25px rgba(139,92,246,.10);
+}}}}
+
+.page-header {{{{
+    padding: 24px 26px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    background: linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+}}}}
+
+.page-header h2 {{{{font-weight:800;letter-spacing:-1px;}}}}
+
+.gallery {{{{gap:18px;}}}}
+
+.card {{{{
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(20,22,31,.88);
+    box-shadow: 0 10px 35px rgba(0,0,0,.20);
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}}}}
+
+.card:hover {{{{
+    transform: translateY(-6px) scale(1.012);
+    border-color: rgba(139,92,246,.40);
+    box-shadow: 0 18px 45px rgba(0,0,0,.34),0 0 28px rgba(139,92,246,.12);
+}}}}
+
+.card img,.card video {{{{transition: transform .45s ease, filter .35s ease;}}}}
+.card:hover img,.card:hover video {{{{transform:scale(1.025);}}}}
+
+.breadcrumb span {{{{color:#aaa;}}}}
+
+@media (max-width:700px) {{{{
+    .page-header {{{{padding:19px;border-radius:16px;}}}}
+    .page-header h2 {{{{font-size:24px;}}}}
+    .folder-grid {{{{grid-template-columns:1fr;}}}}
+}}}}
+
 </style>
 </head>
 
@@ -735,19 +875,90 @@ function findFolderByPath(root, targetPath) {{
 function openFolder(folder, button) {{
     setActive(button);
 
-    const allFiles = [...folder.files];
-
-    // A folder page shows files directly inside it.
-    // Subfolders are shown as folders in the sidebar.
     const parts = folder.path.split("/");
+    const content = document.getElementById("content");
 
     setHeader(
         folder.name,
-        "Folder contents",
+        folder.folders.length
+            ? `${{folder.folders.length}} folder${{folder.folders.length === 1 ? "" : "s"}} · ${{folder.files.length}} file${{folder.files.length === 1 ? "" : "s"}}`
+            : `${{folder.files.length}} file${{folder.files.length === 1 ? "" : "s"}}`,
         parts
     );
 
-    renderMedia(allFiles);
+    let html = "";
+
+    // Show subfolders prominently in the CENTER of the page.
+    if (folder.folders.length) {{
+        html += '<div class="folder-grid">';
+
+        folder.folders.forEach(child => {{
+            const count = child.files.length + child.folders.length;
+            html += `
+                <button class="folder-card" data-folder-path="${{escapeHtml(child.path)}}">
+                    <div class="folder-icon">📁</div>
+                    <div class="folder-card-info">
+                        <div class="folder-card-name">${{escapeHtml(child.name)}}</div>
+                        <div class="folder-card-meta">${{count}} item${{count === 1 ? "" : "s"}} · Open folder</div>
+                    </div>
+                </button>`;
+        }});
+
+        html += '</div>';
+    }}
+
+    if (folder.files.length) {{
+        // Reuse the same beautiful media/file renderer for files.
+        content.innerHTML = html + '<div id="folderFiles"></div>';
+        const fileHost = document.getElementById("folderFiles");
+
+        const media = folder.files.filter(x => x.kind === "image" || x.kind === "video");
+        const other = folder.files.filter(x => x.kind !== "image" && x.kind !== "video");
+        let filesHtml = "";
+
+        if (media.length) {{
+            filesHtml += '<div class="gallery">';
+            media.forEach(item => {{
+                const url = fileUrl(item.path);
+                if (item.kind === "image") {{
+                    filesHtml += `<div class="card"><img src="${{url}}" alt="${{escapeHtml(item.name)}}" loading="lazy"></div>`;
+                }} else {{
+                    filesHtml += `<div class="card"><video controls preload="none" playsinline><source src="${{url}}">Your browser does not support video.</video></div>`;
+                }}
+            }});
+            filesHtml += '</div>';
+        }}
+
+        if (other.length) {{
+            filesHtml += '<div class="file-list">';
+            other.forEach(item => {{
+                const url = fileUrl(item.path);
+                const label = item.kind === "html" ? "HTML" : item.kind === "part" ? "PART / INCOMPLETE" : "FILE";
+                filesHtml += `<div class="file-card"><div class="file-info"><div class="file-name">${{escapeHtml(item.name)}}</div><div class="file-type">${{label}}</div></div><a class="file-link" href="${{url}}" target="_blank" rel="noopener">Open</a></div>`;
+            }});
+            filesHtml += '</div>';
+        }}
+
+        fileHost.innerHTML = filesHtml;
+    }} else {{
+        content.innerHTML = html || '<div class="empty">This folder is empty.</div>';
+    }}
+
+    // Center folder cards open the selected subfolder.
+    content.querySelectorAll(".folder-card").forEach(card => {{
+        card.addEventListener("click", () => {{
+            const target = findFolderByPathFromCollections(card.dataset.folderPath);
+            if (target) openFolder(target, button);
+        }});
+    }});
+}}
+
+function findFolderByPathFromCollections(targetPath) {{
+    for (const root of collections) {{
+        const found = findFolderByPath(root, targetPath);
+        if (found) return found;
+    }}
+    return null;
 }}
 
 function buildFolderNode(folder) {{
