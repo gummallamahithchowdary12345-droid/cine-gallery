@@ -40,7 +40,7 @@ ALL_EXTENSIONS = IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
 
 
 # =====================================================
-# CREATE OLD FOLDERS
+# CREATE STANDARD FOLDERS
 # =====================================================
 
 os.makedirs(MEDIA_FOLDER, exist_ok=True)
@@ -49,7 +49,7 @@ os.makedirs(VIDEOS_FOLDER, exist_ok=True)
 
 
 # =====================================================
-# GET OLD MEDIA
+# GET STANDARD MEDIA
 # =====================================================
 
 def get_media():
@@ -58,7 +58,7 @@ def get_media():
     videos = []
 
     # -------------------------------------------------
-    # OLD MEDIA FOLDER
+    # MEDIA
     # -------------------------------------------------
 
     for file in Path(MEDIA_FOLDER).iterdir():
@@ -81,7 +81,7 @@ def get_media():
             )
 
     # -------------------------------------------------
-    # NEW PHOTOS FOLDER
+    # PHOTOS
     # -------------------------------------------------
 
     for file in Path(PHOTOS_FOLDER).iterdir():
@@ -96,7 +96,7 @@ def get_media():
             )
 
     # -------------------------------------------------
-    # NEW VIDEOS FOLDER
+    # VIDEOS
     # -------------------------------------------------
 
     for file in Path(VIDEOS_FOLDER).iterdir():
@@ -110,6 +110,10 @@ def get_media():
                 (file, "videos")
             )
 
+    # -------------------------------------------------
+    # SORT
+    # -------------------------------------------------
+
     photos.sort(
         key=lambda x: x[0].name.lower()
     )
@@ -122,7 +126,7 @@ def get_media():
 
 
 # =====================================================
-# GET WEB PATH
+# GET WEBSITE PATH
 # =====================================================
 
 def get_web_path(file, folder_type):
@@ -133,7 +137,7 @@ def get_web_path(file, folder_type):
 
 
 # =====================================================
-# GET CUSTOM FOLDERS
+# GET CUSTOM TOP-LEVEL FOLDERS
 #
 # Example:
 #
@@ -150,10 +154,13 @@ def get_custom_folders():
 
     root = Path(REPO_FOLDER)
 
-    ignored = {
+    ignored_folders = {
         ".git",
         ".github",
-        "__pycache__"
+        "__pycache__",
+        "media",
+        "photos",
+        "videos"
     }
 
     for item in root.iterdir():
@@ -161,14 +168,7 @@ def get_custom_folders():
         if not item.is_dir():
             continue
 
-        if item.name in ignored:
-            continue
-
-        if item.name in {
-            "media",
-            "photos",
-            "videos"
-        }:
+        if item.name in ignored_folders:
             continue
 
         folders.append(item)
@@ -181,31 +181,95 @@ def get_custom_folders():
 
 
 # =====================================================
-# GET FOLDER MEDIA
+# GET ALL FOLDERS RECURSIVELY
+# =====================================================
+
+def get_all_custom_folders():
+
+    all_folders = []
+
+    for root_folder in get_custom_folders():
+
+        # Add top-level folder
+        all_folders.append(root_folder)
+
+        # Add every nested folder
+        for folder in root_folder.rglob("*"):
+
+            if folder.is_dir():
+
+                all_folders.append(folder)
+
+    return all_folders
+
+
+# =====================================================
+# GET CHILD FOLDERS
+# =====================================================
+
+def get_child_folders(folder):
+
+    children = []
+
+    try:
+
+        for item in folder.iterdir():
+
+            if item.is_dir():
+
+                children.append(item)
+
+    except Exception:
+        pass
+
+    children.sort(
+        key=lambda x: x.name.lower()
+    )
+
+    return children
+
+
+# =====================================================
+# GET ALL MEDIA INSIDE FOLDER
+#
+# IMPORTANT:
+# This is recursive.
+#
+# So:
+#
+# chay/SIIMA/video.mp4
+#
+# WILL BE FOUND.
+#
 # =====================================================
 
 def get_folder_media(folder):
 
     media = []
 
-    for file in folder.rglob("*"):
+    try:
 
-        if not file.is_file():
-            continue
+        for file in folder.rglob("*"):
 
-        if file.suffix.lower() not in ALL_EXTENSIONS:
-            continue
+            if not file.is_file():
+                continue
 
-        relative_path = file.relative_to(
-            Path(REPO_FOLDER)
-        )
+            if file.suffix.lower() not in ALL_EXTENSIONS:
+                continue
 
-        media.append(
-            (
-                file,
-                relative_path
+            relative_path = file.relative_to(
+                Path(REPO_FOLDER)
             )
-        )
+
+            media.append(
+                (
+                    file,
+                    relative_path
+                )
+            )
+
+    except Exception:
+        pass
 
     media.sort(
         key=lambda x: str(x[0]).lower()
@@ -215,29 +279,7 @@ def get_folder_media(folder):
 
 
 # =====================================================
-# GET CHILD FOLDERS
-# =====================================================
-
-def get_child_folders(folder):
-
-    result = []
-
-    for item in folder.iterdir():
-
-        if not item.is_dir():
-            continue
-
-        result.append(item)
-
-    result.sort(
-        key=lambda x: x.name.lower()
-    )
-
-    return result
-
-
-# =====================================================
-# WEB PATH FOR CUSTOM FOLDER FILE
+# GET CUSTOM WEB PATH
 # =====================================================
 
 def get_custom_web_path(file):
@@ -246,10 +288,13 @@ def get_custom_web_path(file):
         Path(REPO_FOLDER)
     )
 
-    parts = [
-        quote(part)
-        for part in relative.parts
-    ]
+    parts = []
+
+    for part in relative.parts:
+
+        parts.append(
+            quote(part)
+        )
 
     return "/".join(parts)
 
@@ -262,17 +307,18 @@ def create_folder_html(folder):
 
     html = ""
 
-    child_folders = get_child_folders(folder)
+    # =================================================
+    # CHILD FOLDERS
+    # =================================================
 
-    # -------------------------------------------------
-    # CHILD FOLDER CARDS
-    # -------------------------------------------------
+    child_folders = get_child_folders(folder)
 
     if child_folders:
 
         html += """
-        <div class="folder-grid">
-        """
+<div class="folder-grid">
+"""
+
 
         for child in child_folders:
 
@@ -280,102 +326,138 @@ def create_folder_html(folder):
                 Path(REPO_FOLDER)
             )
 
-            folder_id = quote(
-                "/".join(relative.parts),
+            folder_id = "/".join(
+                relative.parts
+            )
+
+            encoded_id = quote(
+                folder_id,
                 safe=""
             )
 
-            child_media = get_folder_media(child)
+            child_media = get_folder_media(
+                child
+            )
 
             html += f"""
-            <div
-                class="folder-card"
-                onclick="showCustomFolder('{folder_id}')"
-            >
-                <div class="folder-icon">📁</div>
+<div
+    class="folder-card"
+    onclick="showCustomFolder('{encoded_id}')"
+>
 
-                <div class="folder-name">
-                    {child.name}
-                </div>
+    <div class="folder-icon">
+        📁
+    </div>
 
-                <div class="folder-count">
-                    {len(child_media)} items
-                </div>
-            </div>
-            """
+    <div class="folder-name">
+        {child.name}
+    </div>
+
+    <div class="folder-count">
+        {len(child_media)} items
+    </div>
+
+</div>
+"""
+
 
         html += """
-        </div>
-        """
+</div>
+"""
 
-    # -------------------------------------------------
-    # MEDIA INSIDE CURRENT FOLDER
-    # -------------------------------------------------
+
+    # =================================================
+    # MEDIA
+    # =================================================
 
     media = get_folder_media(folder)
 
     if media:
 
         html += """
-        <div class="gallery">
-        """
+<div class="gallery">
+"""
+
 
         for file, relative_path in media:
 
-            web_path = get_custom_web_path(file)
+            web_path = get_custom_web_path(
+                file
+            )
 
             extension = file.suffix.lower()
+
+
+            # -----------------------------------------
+            # IMAGE
+            # -----------------------------------------
 
             if extension in IMAGE_EXTENSIONS:
 
                 html += f"""
-                <div class="card">
-                    <img
-                        src="{web_path}"
-                        alt="Photo"
-                        loading="lazy"
-                        decoding="async">
-                </div>
-                """
+<div class="card">
+
+<img
+    src="{web_path}"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+"""
+
+
+            # -----------------------------------------
+            # VIDEO
+            # -----------------------------------------
 
             elif extension in VIDEO_EXTENSIONS:
 
                 html += f"""
-                <div class="card">
-                    <video
-                        controls
-                        preload="none"
-                        playsinline>
-                        <source src="{web_path}">
-                        Your browser does not support video.
-                    </video>
-                </div>
-                """
+<div class="card">
+
+<video
+    controls
+    preload="metadata"
+    playsinline>
+
+<source
+    src="{web_path}">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+"""
+
 
         html += """
-        </div>
-        """
+</div>
+"""
 
-    # -------------------------------------------------
+
+    # =================================================
     # EMPTY
-    # -------------------------------------------------
+    # =================================================
 
     if not child_folders and not media:
 
         html += """
-        <p style="
-            color:#777;
-            padding:20px 0;
-        ">
-            This folder is empty.
-        </p>
-        """
+<p style="
+    color:#777;
+    padding:20px 0;
+">
+    This folder is empty.
+</p>
+"""
+
 
     return html
 
 
 # =====================================================
-# CREATE SIDEBAR FOLDER BUTTONS
+# CREATE SIDEBAR FOLDERS
 # =====================================================
 
 def create_sidebar_folders():
@@ -390,17 +472,22 @@ def create_sidebar_folders():
             Path(REPO_FOLDER)
         )
 
-        folder_id = quote(
-            "/".join(relative.parts),
+        folder_id = "/".join(
+            relative.parts
+        )
+
+        encoded_id = quote(
+            folder_id,
             safe=""
         )
 
         html += f"""
-        <button
-            onclick="showCustomFolder('{folder_id}', this)">
-            📁 {folder.name}
-        </button>
-        """
+<button
+    onclick="showCustomFolder('{encoded_id}', this)">
+    📁 {folder.name}
+</button>
+"""
+
 
     return html
 
@@ -418,6 +505,9 @@ def create_website():
     total_count = photo_count + video_count
 
     custom_folders = get_custom_folders()
+
+    all_custom_folders = get_all_custom_folders()
+
 
     # =================================================
     # HTML START
@@ -437,7 +527,6 @@ def create_website():
     content="width=device-width, initial-scale=1.0">
 
 <title>Cine Gallery</title>
-
 
 <style>
 
@@ -531,6 +620,13 @@ body {{
 /* =================================================
    NAVIGATION
    ================================================= */
+
+.nav {{
+
+    overflow-y: auto;
+
+}}
+
 
 .nav button {{
 
@@ -755,11 +851,11 @@ body {{
 
     background: #181818;
 
-    border: 1px solid #292929;
+    padding: 25px;
 
     border-radius: 16px;
 
-    padding: 30px 20px;
+    border: 1px solid #292929;
 
     cursor: pointer;
 
@@ -781,7 +877,7 @@ body {{
 
 .folder-icon {{
 
-    font-size: 48px;
+    font-size: 45px;
 
     margin-bottom: 15px;
 
@@ -794,7 +890,7 @@ body {{
 
     font-weight: bold;
 
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 
 }}
 
@@ -919,13 +1015,17 @@ body {{
 <button
     class="active"
     onclick="showSection('photos', this)">
+
     🖼️ &nbsp; Photos
+
 </button>
 
 
 <button
     onclick="showSection('videos', this)">
+
     🎥 &nbsp; Videos
+
 </button>
 
 
@@ -1042,8 +1142,7 @@ My photo collection
 
 <div
     id="videos"
-    style="display: none;">
-
+    style="display:none;">
 
 <div class="gallery">
 """
@@ -1086,9 +1185,8 @@ Your browser does not support video.
 
 
 <!-- =================================================
-     CUSTOM FOLDERS
-     =================================================
--->
+     CUSTOM FOLDER
+     ================================================= -->
 
 <div
     id="customFolder"
@@ -1119,10 +1217,21 @@ const folderData = {
 
 
     # =================================================
-    # GENERATE FOLDER DATA
+    # GENERATE DATA FOR EVERY FOLDER
+    #
+    # THIS IS THE IMPORTANT FIX
+    #
+    # It includes:
+    #
+    # chay
+    # chay/SIIMA
+    # chay/Events
+    # chay/Thandel
+    #
+    # and any deeper folders.
     # =================================================
 
-    for folder in custom_folders:
+    for folder in all_custom_folders:
 
         relative = folder.relative_to(
             Path(REPO_FOLDER)
@@ -1132,9 +1241,18 @@ const folderData = {
             relative.parts
         )
 
-        folder_html = create_folder_html(folder)
+        encoded_id = quote(
+            folder_id,
+            safe=""
+        )
 
-        # Escape for JavaScript
+        folder_html = create_folder_html(
+            folder
+        )
+
+
+        # Escape JavaScript template literal
+
         folder_html = (
             folder_html
             .replace("\\", "\\\\")
@@ -1142,8 +1260,9 @@ const folderData = {
             .replace("${", "\\${")
         )
 
+
         html += f"""
-"{quote(folder_id, safe="")}": `
+"{encoded_id}": `
 {folder_html}
 `,
 """
@@ -1154,7 +1273,7 @@ const folderData = {
 
 
 /* =================================================
-   SHOW NORMAL SECTION
+   SHOW PHOTOS / VIDEOS
    ================================================= */
 
 function showSection(section, button) {
@@ -1175,12 +1294,12 @@ function showSection(section, button) {
         document.getElementById("pageDescription");
 
 
-    // Hide custom folder
+    photos.style.display = "none";
+
+    videos.style.display = "none";
 
     customFolder.style.display = "none";
 
-
-    // Remove active state
 
     document
         .querySelectorAll(".nav button")
@@ -1191,20 +1310,20 @@ function showSection(section, button) {
         });
 
 
-    // Activate clicked button
+    if (button) {
 
-    button.classList.add("active");
+        button.classList.add("active");
+
+    }
 
 
-    // =================================================
-    // PHOTOS
-    // =================================================
+    /* ---------------------------------------------
+       PHOTOS
+       --------------------------------------------- */
 
     if (section === "photos") {
 
         photos.style.display = "block";
-
-        videos.style.display = "none";
 
         title.innerText = "Photos";
 
@@ -1214,13 +1333,11 @@ function showSection(section, button) {
     }
 
 
-    // =================================================
-    // VIDEOS
-    // =================================================
+    /* ---------------------------------------------
+       VIDEOS
+       --------------------------------------------- */
 
     if (section === "videos") {
-
-        photos.style.display = "none";
 
         videos.style.display = "block";
 
@@ -1238,7 +1355,10 @@ function showSection(section, button) {
    SHOW CUSTOM FOLDER
    ================================================= */
 
-function showCustomFolder(folderId, button = null) {
+function showCustomFolder(
+    folderId,
+    button = null
+) {
 
     const photos =
         document.getElementById("photos");
@@ -1259,6 +1379,10 @@ function showCustomFolder(folderId, button = null) {
         document.getElementById("pageDescription");
 
 
+    /* ---------------------------------------------
+       Hide normal sections
+       --------------------------------------------- */
+
     photos.style.display = "none";
 
     videos.style.display = "none";
@@ -1266,25 +1390,31 @@ function showCustomFolder(folderId, button = null) {
     customFolder.style.display = "block";
 
 
-    /*
-       Decode folder name
-    */
+    /* ---------------------------------------------
+       Get folder name
+       --------------------------------------------- */
 
     let decodedId = folderId;
 
+
     try {
 
-        decodedId = decodeURIComponent(folderId);
+        decodedId =
+            decodeURIComponent(folderId);
 
-    } catch (e) {
+    }
 
-        decodedId = folderId;
+    catch (error) {
+
+        decodedId =
+            folderId;
 
     }
 
 
     const parts =
         decodedId.split("/");
+
 
     const folderName =
         parts[parts.length - 1];
@@ -1298,32 +1428,34 @@ function showCustomFolder(folderId, button = null) {
         "Folder collection";
 
 
-    /*
+    /* ---------------------------------------------
        Show folder content
-    */
+       --------------------------------------------- */
 
     if (folderData[folderId]) {
 
         folderContent.innerHTML =
             folderData[folderId];
 
-    } else {
+    }
+
+    else {
 
         folderContent.innerHTML = `
-            <p style="
-                color:#777;
-                padding:20px 0;
-            ">
-                This folder is empty.
-            </p>
-        `;
+<p style="
+    color:#777;
+    padding:20px 0;
+">
+    This folder is empty.
+</p>
+`;
 
     }
 
 
-    /*
-       Sidebar active state
-    */
+    /* ---------------------------------------------
+       Active sidebar button
+       --------------------------------------------- */
 
     document
         .querySelectorAll(".nav button")
@@ -1342,10 +1474,6 @@ function showCustomFolder(folderId, button = null) {
 
 }
 
-
-/* =================================================
-   INITIAL
-   ================================================= */
 
 </script>
 
@@ -1378,15 +1506,15 @@ function showCustomFolder(folderId, button = null) {
     print()
     print("Website updated!")
     print()
-    print(f"Posts:  {total_count}")
-    print(f"Photos: {photo_count}")
-    print(f"Videos: {video_count}")
+    print(f"Posts:   {total_count}")
+    print(f"Photos:  {photo_count}")
+    print(f"Videos:  {video_count}")
     print(f"Folders: {len(custom_folders)}")
     print()
 
 
 # =====================================================
-# GET FOLDER STATE
+# GET COMPLETE FOLDER STATE
 # =====================================================
 
 def get_folder_state():
@@ -1401,25 +1529,40 @@ def get_folder_state():
         "__pycache__"
     }
 
+
     for file in root.rglob("*"):
 
         if not file.is_file():
             continue
 
-        if any(
-            part in ignored
-            for part in file.parts
-        ):
-            continue
-
-        if file.name in {
-            "index.html"
-        }:
-            continue
 
         try:
 
-            relative = file.relative_to(root)
+            relative = file.relative_to(
+                root
+            )
+
+        except Exception:
+
+            continue
+
+
+        # Ignore git/system files
+
+        if any(
+            part in ignored
+            for part in relative.parts
+        ):
+            continue
+
+
+        # Ignore generated index
+
+        if file.name == "index.html":
+            continue
+
+
+        try:
 
             state[
                 str(relative)
@@ -1429,7 +1572,9 @@ def get_folder_state():
             )
 
         except Exception:
+
             pass
+
 
     return state
 
@@ -1443,15 +1588,23 @@ def push_to_github():
     os.chdir(REPO_FOLDER)
 
 
-    # Add changes
+    # -------------------------------------------------
+    # ADD
+    # -------------------------------------------------
 
     subprocess.run(
-        ["git", "add", "."],
+        [
+            "git",
+            "add",
+            "."
+        ],
         check=True
     )
 
 
-    # Check changes
+    # -------------------------------------------------
+    # CHECK CHANGES
+    # -------------------------------------------------
 
     result = subprocess.run(
         [
@@ -1465,12 +1618,16 @@ def push_to_github():
 
     if result.returncode == 0:
 
-        print("No changes to push.")
+        print(
+            "No changes to push."
+        )
 
         return
 
 
-    # Commit
+    # -------------------------------------------------
+    # COMMIT
+    # -------------------------------------------------
 
     subprocess.run(
         [
@@ -1483,7 +1640,9 @@ def push_to_github():
     )
 
 
-    # Push
+    # -------------------------------------------------
+    # PUSH
+    # -------------------------------------------------
 
     subprocess.run(
         [
@@ -1506,25 +1665,59 @@ def push_to_github():
 # =====================================================
 
 print()
-print("======================================")
-print("       CINE GALLERY AUTOMATION")
-print("======================================")
+
+print(
+    "======================================"
+)
+
+print(
+    "       CINE GALLERY AUTOMATION"
+)
+
+print(
+    "======================================"
+)
+
 print()
 
-print("Existing media folder:")
-print(MEDIA_FOLDER)
+print(
+    "Existing media folder:"
+)
+
+print(
+    MEDIA_FOLDER
+)
+
 print()
 
-print("New photos folder:")
-print(PHOTOS_FOLDER)
+print(
+    "New photos folder:"
+)
+
+print(
+    PHOTOS_FOLDER
+)
+
 print()
 
-print("New videos folder:")
-print(VIDEOS_FOLDER)
+print(
+    "New videos folder:"
+)
+
+print(
+    VIDEOS_FOLDER
+)
+
 print()
 
-print("Watching all folders...")
-print("Press CTRL + C to stop.")
+print(
+    "Watching all folders..."
+)
+
+print(
+    "Press CTRL + C to stop."
+)
+
 print()
 
 
@@ -1556,12 +1749,18 @@ while True:
         if old_state != new_state:
 
             print()
-            print("📸 New media/folder detected!")
+
+            print(
+                "📸 New media/folder detected!"
+            )
+
             print()
+
 
             create_website()
 
             push_to_github()
+
 
             old_state = new_state
 
@@ -1571,15 +1770,26 @@ while True:
     except KeyboardInterrupt:
 
         print()
-        print("Automation stopped.")
+
+        print(
+            "Automation stopped."
+        )
+
         break
 
 
     except Exception as error:
 
         print()
-        print("ERROR:")
-        print(error)
+
+        print(
+            "ERROR:"
+        )
+
+        print(
+            error
+        )
+
         print()
 
         time.sleep(10)
