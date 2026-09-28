@@ -249,7 +249,11 @@ def get_folder_media(folder):
 
     try:
 
-        for file in folder.rglob("*"):
+        # IMPORTANT:
+        # Only look at files directly inside this folder.
+        # Do NOT search inside child folders.
+
+        for file in folder.iterdir():
 
             if not file.is_file():
                 continue
@@ -276,7 +280,6 @@ def get_folder_media(folder):
     )
 
     return media
-
 
 # =====================================================
 # GET CUSTOM WEB PATH
