@@ -4,201 +4,405 @@ import subprocess
 from pathlib import Path
 from urllib.parse import quote
 
+
 # =====================================================
 # PATHS
 # =====================================================
 
-REPO_FOLDER = Path(r"C:\Users\Mahith Chowdary\Downloads\cine-gallery")
+REPO_FOLDER = r"C:\Users\Mahith Chowdary\Downloads\cine-gallery"
 
-MEDIA_FOLDER = REPO_FOLDER / "media"
-PHOTOS_FOLDER = REPO_FOLDER / "photos"
-VIDEOS_FOLDER = REPO_FOLDER / "videos"
+MEDIA_FOLDER = os.path.join(REPO_FOLDER, "media")
+PHOTOS_FOLDER = os.path.join(REPO_FOLDER, "photos")
+VIDEOS_FOLDER = os.path.join(REPO_FOLDER, "videos")
 
-# Any other folder directly inside the repo becomes a
-# top-level section in the left sidebar.
-EXCLUDED_ROOT_FOLDERS = {
-    ".git", ".github", "__pycache__", "media", "photos", "videos"
+
+# =====================================================
+# FILE TYPES
+# =====================================================
+
+IMAGE_EXTENSIONS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".webp"
 }
 
-IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".avif"}
-VIDEO_EXTENSIONS = {".mp4", ".mov", ".webm", ".avi", ".mkv", ".m4v"}
-HTML_EXTENSIONS = {".html", ".htm"}
-IGNORED_EXTENSIONS = {".pyc"}
+VIDEO_EXTENSIONS = {
+    ".mp4",
+    ".mov",
+    ".webm",
+    ".avi",
+    ".mkv"
+}
 
-# =====================================================
-# FOLDER SETUP
-# =====================================================
-
-for folder in (MEDIA_FOLDER, PHOTOS_FOLDER, VIDEOS_FOLDER):
-    folder.mkdir(parents=True, exist_ok=True)
+ALL_EXTENSIONS = IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
 
 
 # =====================================================
-# HELPERS
+# CREATE OLD FOLDERS
 # =====================================================
 
-def is_media_file(path: Path):
-    return path.suffix.lower() in IMAGE_EXTENSIONS | VIDEO_EXTENSIONS
+os.makedirs(MEDIA_FOLDER, exist_ok=True)
+os.makedirs(PHOTOS_FOLDER, exist_ok=True)
+os.makedirs(VIDEOS_FOLDER, exist_ok=True)
 
 
-def classify_file(path: Path):
-    ext = path.suffix.lower()
-    if ext in IMAGE_EXTENSIONS:
-        return "image"
-    if ext in VIDEO_EXTENSIONS:
-        return "video"
-    if ext in HTML_EXTENSIONS:
-        return "html"
-    if ext == ".part":
-        return "part"
-    return "file"
+# =====================================================
+# GET OLD MEDIA
+# =====================================================
 
+def get_media():
 
-def safe_name(path: Path):
-    return quote(path.name, safe="")
-
-
-def relative_web_path(path: Path):
-    # GitHub Pages uses forward slashes.
-    return quote(path.relative_to(REPO_FOLDER).as_posix(), safe="/")
-
-
-def pretty_name(name: str):
-    return name.replace("_", " ").replace("-", " ").strip()
-
-
-def scan_tree(root: Path):
-    """
-    Recursively scan a folder.
-
-    Returns:
-      {
-        "name": folder display name,
-        "path": repo-relative path,
-        "files": [...],
-        "folders": [...]
-      }
-
-    Every file is retained. Images/videos render in the gallery;
-    HTML/PART/other files appear in a file list.
-    """
-    node = {
-        "name": root.name,
-        "path": root.relative_to(REPO_FOLDER).as_posix(),
-        "files": [],
-        "folders": []
-    }
-
-    try:
-        children = sorted(
-            root.iterdir(),
-            key=lambda p: (not p.is_dir(), p.name.lower())
-        )
-    except OSError:
-        return node
-
-    for child in children:
-        if child.name.startswith(".") and child.name != ".part":
-            continue
-        if child.is_dir():
-            node["folders"].append(scan_tree(child))
-            continue
-
-        if child.suffix.lower() in IGNORED_EXTENSIONS:
-            continue
-
-        node["files"].append({
-            "name": child.name,
-            "path": child.relative_to(REPO_FOLDER).as_posix(),
-            "kind": classify_file(child)
-        })
-
-    return node
-
-
-def get_legacy_media():
     photos = []
     videos = []
 
-    for folder, folder_type in (
-        (MEDIA_FOLDER, "media"),
-        (PHOTOS_FOLDER, "photos"),
-        (VIDEOS_FOLDER, "videos"),
-    ):
-        if not folder.exists():
+    # -------------------------------------------------
+    # OLD MEDIA FOLDER
+    # -------------------------------------------------
+
+    for file in Path(MEDIA_FOLDER).iterdir():
+
+        if not file.is_file():
             continue
 
-        for file in folder.iterdir():
-            if not file.is_file():
-                continue
+        extension = file.suffix.lower()
 
-            kind = classify_file(file)
+        if extension in IMAGE_EXTENSIONS:
 
-            if kind == "image":
-                photos.append(file)
-            elif kind == "video":
-                videos.append(file)
+            photos.append(
+                (file, "media")
+            )
 
-    photos.sort(key=lambda p: p.name.lower())
-    videos.sort(key=lambda p: p.name.lower())
+        elif extension in VIDEO_EXTENSIONS:
+
+            videos.append(
+                (file, "media")
+            )
+
+    # -------------------------------------------------
+    # NEW PHOTOS FOLDER
+    # -------------------------------------------------
+
+    for file in Path(PHOTOS_FOLDER).iterdir():
+
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() in IMAGE_EXTENSIONS:
+
+            photos.append(
+                (file, "photos")
+            )
+
+    # -------------------------------------------------
+    # NEW VIDEOS FOLDER
+    # -------------------------------------------------
+
+    for file in Path(VIDEOS_FOLDER).iterdir():
+
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() in VIDEO_EXTENSIONS:
+
+            videos.append(
+                (file, "videos")
+            )
+
+    photos.sort(
+        key=lambda x: x[0].name.lower()
+    )
+
+    videos.sort(
+        key=lambda x: x[0].name.lower()
+    )
 
     return photos, videos
 
 
-def get_collection_trees():
-    collections = []
+# =====================================================
+# GET WEB PATH
+# =====================================================
 
-    for child in sorted(REPO_FOLDER.iterdir(), key=lambda p: p.name.lower()):
-        if not child.is_dir():
+def get_web_path(file, folder_type):
+
+    filename = quote(file.name)
+
+    return f"{folder_type}/{filename}"
+
+
+# =====================================================
+# GET CUSTOM FOLDERS
+#
+# Example:
+#
+# chay/
+#     SIIMA/
+#     Events/
+#     Thandel/
+#
+# =====================================================
+
+def get_custom_folders():
+
+    folders = []
+
+    root = Path(REPO_FOLDER)
+
+    ignored = {
+        ".git",
+        ".github",
+        "__pycache__"
+    }
+
+    for item in root.iterdir():
+
+        if not item.is_dir():
             continue
-        if child.name in EXCLUDED_ROOT_FOLDERS:
+
+        if item.name in ignored:
             continue
-        if child.name.startswith("."):
+
+        if item.name in {
+            "media",
+            "photos",
+            "videos"
+        }:
             continue
 
-        collections.append(scan_tree(child))
+        folders.append(item)
 
-    return collections
+    folders.sort(
+        key=lambda x: x.name.lower()
+    )
+
+    return folders
 
 
-def flatten_tree_files(node):
-    result = list(node["files"])
-    for folder in node["folders"]:
-        result.extend(flatten_tree_files(folder))
+# =====================================================
+# GET FOLDER MEDIA
+# =====================================================
+
+def get_folder_media(folder):
+
+    media = []
+
+    for file in folder.rglob("*"):
+
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() not in ALL_EXTENSIONS:
+            continue
+
+        relative_path = file.relative_to(
+            Path(REPO_FOLDER)
+        )
+
+        media.append(
+            (
+                file,
+                relative_path
+            )
+        )
+
+    media.sort(
+        key=lambda x: str(x[0]).lower()
+    )
+
+    return media
+
+
+# =====================================================
+# GET CHILD FOLDERS
+# =====================================================
+
+def get_child_folders(folder):
+
+    result = []
+
+    for item in folder.iterdir():
+
+        if not item.is_dir():
+            continue
+
+        result.append(item)
+
+    result.sort(
+        key=lambda x: x.name.lower()
+    )
+
     return result
 
 
 # =====================================================
-# JAVASCRIPT DATA
+# WEB PATH FOR CUSTOM FOLDER FILE
 # =====================================================
 
-def js_quote(value):
-    # JSON is valid JavaScript string syntax.
-    import json
-    return json.dumps(value, ensure_ascii=False)
+def get_custom_web_path(file):
+
+    relative = file.relative_to(
+        Path(REPO_FOLDER)
+    )
+
+    parts = [
+        quote(part)
+        for part in relative.parts
+    ]
+
+    return "/".join(parts)
 
 
-def build_tree_js(node):
-    files = []
-    for item in node["files"]:
-        files.append(
-            "{"
-            f"name:{js_quote(item['name'])},"
-            f"path:{js_quote(item['path'])},"
-            f"kind:{js_quote(item['kind'])}"
-            "}"
+# =====================================================
+# CREATE FOLDER HTML
+# =====================================================
+
+def create_folder_html(folder):
+
+    html = ""
+
+    child_folders = get_child_folders(folder)
+
+    # -------------------------------------------------
+    # CHILD FOLDER CARDS
+    # -------------------------------------------------
+
+    if child_folders:
+
+        html += """
+        <div class="folder-grid">
+        """
+
+        for child in child_folders:
+
+            relative = child.relative_to(
+                Path(REPO_FOLDER)
+            )
+
+            folder_id = quote(
+                "/".join(relative.parts),
+                safe=""
+            )
+
+            child_media = get_folder_media(child)
+
+            html += f"""
+            <div
+                class="folder-card"
+                onclick="showCustomFolder('{folder_id}')"
+            >
+                <div class="folder-icon">📁</div>
+
+                <div class="folder-name">
+                    {child.name}
+                </div>
+
+                <div class="folder-count">
+                    {len(child_media)} items
+                </div>
+            </div>
+            """
+
+        html += """
+        </div>
+        """
+
+    # -------------------------------------------------
+    # MEDIA INSIDE CURRENT FOLDER
+    # -------------------------------------------------
+
+    media = get_folder_media(folder)
+
+    if media:
+
+        html += """
+        <div class="gallery">
+        """
+
+        for file, relative_path in media:
+
+            web_path = get_custom_web_path(file)
+
+            extension = file.suffix.lower()
+
+            if extension in IMAGE_EXTENSIONS:
+
+                html += f"""
+                <div class="card">
+                    <img
+                        src="{web_path}"
+                        alt="Photo"
+                        loading="lazy"
+                        decoding="async">
+                </div>
+                """
+
+            elif extension in VIDEO_EXTENSIONS:
+
+                html += f"""
+                <div class="card">
+                    <video
+                        controls
+                        preload="none"
+                        playsinline>
+                        <source src="{web_path}">
+                        Your browser does not support video.
+                    </video>
+                </div>
+                """
+
+        html += """
+        </div>
+        """
+
+    # -------------------------------------------------
+    # EMPTY
+    # -------------------------------------------------
+
+    if not child_folders and not media:
+
+        html += """
+        <p style="
+            color:#777;
+            padding:20px 0;
+        ">
+            This folder is empty.
+        </p>
+        """
+
+    return html
+
+
+# =====================================================
+# CREATE SIDEBAR FOLDER BUTTONS
+# =====================================================
+
+def create_sidebar_folders():
+
+    folders = get_custom_folders()
+
+    html = ""
+
+    for folder in folders:
+
+        relative = folder.relative_to(
+            Path(REPO_FOLDER)
         )
 
-    folders = [build_tree_js(folder) for folder in node["folders"]]
+        folder_id = quote(
+            "/".join(relative.parts),
+            safe=""
+        )
 
-    return (
-        "{"
-        f"name:{js_quote(node['name'])},"
-        f"path:{js_quote(node['path'])},"
-        f"files:[{','.join(files)}],"
-        f"folders:[{','.join(folders)}]"
-        "}"
-    )
+        html += f"""
+        <button
+            onclick="showCustomFolder('{folder_id}', this)">
+            📁 {folder.name}
+        </button>
+        """
+
+    return html
 
 
 # =====================================================
@@ -206,855 +410,1028 @@ def build_tree_js(node):
 # =====================================================
 
 def create_website():
-    photos, videos = get_legacy_media()
-    collections = get_collection_trees()
 
-    legacy_files = []
-
-    for file in photos:
-        legacy_files.append({
-            "name": file.name,
-            "path": file.relative_to(REPO_FOLDER).as_posix(),
-            "kind": "image"
-        })
-
-    for file in videos:
-        legacy_files.append({
-            "name": file.name,
-            "path": file.relative_to(REPO_FOLDER).as_posix(),
-            "kind": "video"
-        })
-
-    legacy_files_js = ",".join(
-        "{"
-        f"name:{js_quote(x['name'])},"
-        f"path:{js_quote(x['path'])},"
-        f"kind:{js_quote(x['kind'])}"
-        "}"
-        for x in legacy_files
-    )
-
-    collections_js = ",".join(build_tree_js(x) for x in collections)
+    photos, videos = get_media()
 
     photo_count = len(photos)
     video_count = len(videos)
-    collection_file_count = sum(
-        len(flatten_tree_files(x)) for x in collections
-    )
-    total_count = photo_count + video_count + collection_file_count
+    total_count = photo_count + video_count
 
-    html = f"""<!DOCTYPE html>
+    custom_folders = get_custom_folders()
+
+    # =================================================
+    # HTML START
+    # =================================================
+
+    html = f"""
+<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
 <title>Cine Gallery</title>
 
+
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+
+/* =================================================
+   GENERAL
+   ================================================= */
+
 * {{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }}
 
+
 body {{
+
     font-family: Arial, sans-serif;
+
     background: #0f0f0f;
+
     color: white;
+
     min-height: 100vh;
+
 }}
+
+
+/* =================================================
+   SIDEBAR
+   ================================================= */
 
 .sidebar {{
+
     position: fixed;
+
     left: 0;
+
     top: 0;
-    width: 270px;
+
+    width: 230px;
+
     height: 100vh;
+
     background: #151515;
+
     border-right: 1px solid #292929;
-    padding: 25px 14px;
+
+    padding: 30px 15px;
+
     display: flex;
+
     flex-direction: column;
+
     z-index: 100;
-    overflow-y: auto;
+
 }}
+
+
+/* =================================================
+   LOGO
+   ================================================= */
 
 .logo {{
+
     text-align: center;
-    margin-bottom: 25px;
+
+    margin-bottom: 40px;
+
 }}
+
 
 .logo h1 {{
-    font-size: 25px;
-    margin-bottom: 7px;
+
+    font-size: 27px;
+
+    margin-bottom: 8px;
+
 }}
+
 
 .logo p {{
+
     color: #777;
+
     font-size: 12px;
+
 }}
 
-.nav button,
-.folder-button {{
+
+/* =================================================
+   NAVIGATION
+   ================================================= */
+
+.nav button {{
+
     width: 100%;
+
     border: none;
+
     background: transparent;
+
     color: #999;
-    padding: 12px 13px;
-    margin-bottom: 5px;
-    border-radius: 9px;
+
+    padding: 14px 16px;
+
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
     text-align: left;
-    font-size: 14px;
+
+    font-size: 15px;
+
     cursor: pointer;
-    transition: .2s;
+
+    transition: 0.2s;
+
 }}
 
-.nav button:hover,
-.folder-button:hover {{
+
+.nav button:hover {{
+
     background: #222;
+
     color: white;
+
 }}
 
-.nav button.active,
-.folder-button.active {{
+
+.nav button.active {{
+
     background: #2a2a2a;
+
     color: white;
+
 }}
 
-.section {{
-    margin-top: 18px;
-}}
 
-.section-title {{
-    color: #666;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 8px 12px;
-}}
-
-.folder-tree {{
-    padding-left: 5px;
-}}
-
-.folder-children {{
-    display: none;
-    padding-left: 13px;
-}}
-
-.folder-children.open {{
-    display: block;
-}}
-
-.folder-row {{
-    display: flex;
-    align-items: center;
-    gap: 3px;
-}}
-
-.folder-toggle {{
-    width: 28px;
-    border: 0;
-    background: transparent;
-    color: #777;
-    cursor: pointer;
-    padding: 8px 0;
-}}
-
-.folder-button {{
-    flex: 1;
-    margin-bottom: 2px;
-}}
+/* =================================================
+   STATS
+   ================================================= */
 
 .stats {{
+
     margin-top: auto;
+
     border-top: 1px solid #292929;
-    padding-top: 15px;
+
+    padding-top: 20px;
+
 }}
+
 
 .stat {{
+
     display: flex;
+
     justify-content: space-between;
-    padding: 7px 5px;
+
+    padding: 8px 5px;
+
     color: #777;
-    font-size: 12px;
+
+    font-size: 13px;
+
 }}
+
 
 .stat strong {{
+
     color: white;
+
 }}
+
+
+/* =================================================
+   MAIN
+   ================================================= */
 
 .main {{
-    margin-left: 270px;
-    padding: 42px;
+
+    margin-left: 230px;
+
+    padding: 45px;
+
 }}
+
+
+/* =================================================
+   HEADER
+   ================================================= */
 
 .page-header {{
-    margin-bottom: 30px;
+
+    margin-bottom: 35px;
+
 }}
+
 
 .page-header h2 {{
-    font-size: 31px;
-    margin-bottom: 7px;
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+
 }}
+
 
 .page-header p {{
+
     color: #777;
+
 }}
 
-.breadcrumb {{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 14px;
-    color: #666;
-    font-size: 12px;
-}}
 
-.breadcrumb span {{
-    color: #aaa;
-}}
-
-.folder-grid {{{{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    margin-bottom: 28px;
-}}}}
-
-.folder-card {{{{
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    min-height: 105px;
-    padding: 20px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 18px;
-    background: linear-gradient(145deg, rgba(139,92,246,.16), rgba(255,255,255,.035));
-    color: white;
-    cursor: pointer;
-    text-align: left;
-    transition: .25s ease;
-    box-shadow: 0 12px 35px rgba(0,0,0,.18);
-}}
-
-.folder-card:hover {{{{
-    transform: translateY(-5px);
-    border-color: rgba(139,92,246,.45);
-    background: linear-gradient(145deg, rgba(139,92,246,.25), rgba(236,72,153,.08));
-    box-shadow: 0 18px 45px rgba(0,0,0,.30), 0 0 28px rgba(139,92,246,.10);
-}}}}
-
-.folder-icon {{{{
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    border-radius: 14px;
-    background: rgba(255,255,255,.08);
-    font-size: 25px;
-}}}}
-
-.folder-card-info {{{{
-    min-width: 0;
-}}}}
-
-.folder-card-name {{{{
-    font-size: 15px;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}}}}
-
-.folder-card-meta {{{{
-    color: #888;
-    font-size: 11px;
-    margin-top: 5px;
-}}}}
+/* =================================================
+   GALLERY
+   ================================================= */
 
 .gallery {{
-    column-width: 280px;
-    column-gap: 18px;
-    margin-top: 6px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(280px, 1fr)
+        );
+
+    gap: 22px;
+
 }}
+
+
+/* =================================================
+   CARD
+   ================================================= */
 
 .card {{
-    display: inline-block;
-    width: 100%;
-    margin: 0 0 18px;
-    padding: 7px;
-    background: rgba(255,255,255,.045);
-    border: 1px solid rgba(255,255,255,.08);
+
+    background: #181818;
+
+    padding: 8px;
+
     border-radius: 16px;
+
     overflow: hidden;
-    break-inside: avoid;
-    vertical-align: top;
-    box-shadow: 0 12px 35px rgba(0,0,0,.20);
-    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+
 }}
 
-.card:hover {{
-    transform: translateY(-4px);
-    border-color: rgba(139,92,246,.35);
-    box-shadow: 0 18px 45px rgba(0,0,0,.30), 0 0 24px rgba(139,92,246,.10);
-}}
+
+/* =================================================
+   IMAGES
+   ================================================= */
 
 .card img {{
+
     width: 100%;
-    height: auto;
-    max-height: 78vh;
-    object-fit: contain;
+
+    height: 350px;
+
+    object-fit: cover;
+
     display: block;
+
     border-radius: 11px;
-    background: #08090d;
+
 }}
+
+
+/* =================================================
+   VIDEOS
+   ================================================= */
 
 .card video {{
+
     width: 100%;
-    height: auto;
-    max-height: 78vh;
-    object-fit: contain;
+
+    height: 350px;
+
+    object-fit: cover;
+
     display: block;
+
     border-radius: 11px;
+
     background: #000;
+
 }}
 
-.file-list {{
+
+/* =================================================
+   FOLDERS
+   ================================================= */
+
+.folder-grid {{
+
     display: grid;
-    gap: 10px;
-    margin-top: 28px;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(220px, 1fr)
+        );
+
+    gap: 22px;
+
+    margin-bottom: 35px;
+
 }}
 
-.file-card {{
+
+.folder-card {{
+
     background: #181818;
-    border: 1px solid #242424;
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+
+    border: 1px solid #292929;
+
+    border-radius: 16px;
+
+    padding: 30px 20px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
 }}
 
-.file-info {{
-    min-width: 0;
+
+.folder-card:hover {{
+
+    background: #222;
+
+    border-color: #444;
+
+    transform: translateY(-3px);
+
 }}
 
-.file-name {{
-    font-size: 14px;
-    overflow-wrap: anywhere;
+
+.folder-icon {{
+
+    font-size: 48px;
+
+    margin-bottom: 15px;
+
 }}
 
-.file-type {{
-    color: #666;
-    font-size: 11px;
-    margin-top: 4px;
-    text-transform: uppercase;
+
+.folder-name {{
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
 }}
 
-.file-link {{
-    flex-shrink: 0;
-    color: white;
-    background: #292929;
-    text-decoration: none;
-    border-radius: 8px;
-    padding: 8px 11px;
-    font-size: 12px;
+
+.folder-count {{
+
+    color: #777;
+
+    font-size: 13px;
+
 }}
 
-.file-link:hover {{
-    background: #3a3a3a;
-}}
 
-.empty {{
-    color: #666;
-    padding: 25px 0;
-}}
+/* =================================================
+   MOBILE
+   ================================================= */
 
 @media (max-width: 700px) {{
+
     .sidebar {{
-        width: 78px;
-        padding: 18px 7px;
+
+        width: 75px;
+
+        padding: 20px 8px;
+
     }}
+
 
     .logo h1 {{
+
         font-size: 0;
+
     }}
+
 
     .logo h1::after {{
+
         content: "🎬";
+
         font-size: 25px;
+
     }}
 
-    .logo p,
-    .section-title,
-    .stats,
-    .folder-toggle {{
+
+    .logo p {{
+
         display: none;
+
     }}
 
-    .nav button,
-    .folder-button {{
+
+    .nav button {{
+
         text-align: center;
+
+        padding: 13px 5px;
+
         font-size: 0;
-        padding: 12px 5px;
+
     }}
 
-    .folder-button::before {{
-        content: "📁";
-        font-size: 18px;
+
+    .stats {{
+
+        display: none;
+
     }}
+
 
     .main {{
-        margin-left: 78px;
+
+        margin-left: 75px;
+
         padding: 25px 15px;
+
     }}
+
 
     .gallery {{
-        column-width: auto;
-        column-count: 1;
+
+        grid-template-columns: 1fr;
+
     }}
 
-    .card img,
-    .card video {{
-        max-height: none;
+
+    .folder-grid {{
+
+        grid-template-columns: 1fr;
+
     }}
+
 }}
 
-/* ===== PREMIUM CINE GALLERY UI ===== */
-body {{{{
-    font-family: Inter, Arial, sans-serif;
-    background:
-        radial-gradient(circle at 15% 0%, rgba(139,92,246,.14), transparent 28%),
-        radial-gradient(circle at 95% 10%, rgba(236,72,153,.10), transparent 24%),
-        #07080c;
-}}}}
-
-.sidebar {{{{
-    background: rgba(9,10,15,.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255,255,255,.08);
-}}}}
-
-.logo h1 {{{{
-    font-weight: 800;
-    letter-spacing: -.7px;
-    background: linear-gradient(135deg,#fff,#c4b5fd 55%,#f9a8d4);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}}}}
-
-.nav button, .folder-button {{{{
-    transition: .22s ease;
-}}}}
-
-.nav button:hover, .folder-button:hover {{{{
-    background: rgba(255,255,255,.055);
-    color: #fff;
-    transform: translateX(2px);
-}}}}
-
-.nav button.active, .folder-button.active {{{{
-    background: linear-gradient(135deg,rgba(139,92,246,.24),rgba(236,72,153,.10));
-    border-color: rgba(139,92,246,.32);
-    box-shadow: 0 0 25px rgba(139,92,246,.10);
-}}}}
-
-.page-header {{{{
-    padding: 24px 26px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 20px;
-    background: linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
-    box-shadow: 0 20px 60px rgba(0,0,0,.18);
-}}}}
-
-.page-header h2 {{{{font-weight:800;letter-spacing:-1px;}}}}
-
-.gallery {{{{gap:18px;}}}}
-
-.card {{{{
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(20,22,31,.88);
-    box-shadow: 0 10px 35px rgba(0,0,0,.20);
-    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
-}}}}
-
-.card:hover {{{{
-    transform: translateY(-6px) scale(1.012);
-    border-color: rgba(139,92,246,.40);
-    box-shadow: 0 18px 45px rgba(0,0,0,.34),0 0 28px rgba(139,92,246,.12);
-}}}}
-
-.card img,.card video {{{{transition: transform .45s ease, filter .35s ease;}}}}
-.card:hover img,.card:hover video {{{{transform:scale(1.025);}}}}
-
-.breadcrumb span {{{{color:#aaa;}}}}
-
-@media (max-width:700px) {{{{
-    .page-header {{{{padding:19px;border-radius:16px;}}}}
-    .page-header h2 {{{{font-size:24px;}}}}
-    .folder-grid {{{{grid-template-columns:1fr;}}}}
-}}}}
 
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =================================================
+     SIDEBAR
+     ================================================= -->
+
 <aside class="sidebar">
 
+
 <div class="logo">
-    <h1>🎬 Cine Gallery</h1>
-    <p>My Collection</p>
+
+<h1>🎬 Cine Gallery</h1>
+
+<p>My Collection</p>
+
 </div>
+
 
 <div class="nav">
-    <button class="active" onclick="openLegacy('photos', this)">
-        🖼️ &nbsp; Photos
-    </button>
 
-    <button onclick="openLegacy('videos', this)">
-        🎥 &nbsp; Videos
-    </button>
+
+<button
+    class="active"
+    onclick="showSection('photos', this)">
+    🖼️ &nbsp; Photos
+</button>
+
+
+<button
+    onclick="showSection('videos', this)">
+    🎥 &nbsp; Videos
+</button>
+
+
+{create_sidebar_folders()}
+
+
 </div>
 
-<div class="section">
-    <div class="section-title">Collections</div>
-    <div id="folderTree" class="folder-tree"></div>
-</div>
+
+<!-- =================================================
+     COUNTS
+     ================================================= -->
 
 <div class="stats">
-    <div class="stat">
-        <span>Total</span>
-        <strong>{total_count}</strong>
-    </div>
-    <div class="stat">
-        <span>Photos</span>
-        <strong>{photo_count}</strong>
-    </div>
-    <div class="stat">
-        <span>Videos</span>
-        <strong>{video_count}</strong>
-    </div>
-    <div class="stat">
-        <span>Collection files</span>
-        <strong>{collection_file_count}</strong>
-    </div>
+
+
+<div class="stat">
+
+<span>Posts</span>
+
+<strong>{total_count}</strong>
+
 </div>
+
+
+<div class="stat">
+
+<span>Photos</span>
+
+<strong>{photo_count}</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>Videos</span>
+
+<strong>{video_count}</strong>
+
+</div>
+
+
+</div>
+
 
 </aside>
 
+
+<!-- =================================================
+     MAIN
+     ================================================= -->
+
 <main class="main">
 
+
 <div class="page-header">
-    <h2 id="pageTitle">Photos</h2>
-    <p id="pageDescription">My photo collection</p>
-    <div id="breadcrumb" class="breadcrumb"></div>
+
+<h2 id="pageTitle">
+Photos
+</h2>
+
+<p id="pageDescription">
+My photo collection
+</p>
+
 </div>
 
-<div id="content"></div>
+
+<!-- =================================================
+     PHOTOS
+     ================================================= -->
+
+<div id="photos">
+
+
+<div class="gallery">
+"""
+
+
+    # =================================================
+    # ADD PHOTOS
+    # =================================================
+
+    for file, folder_type in photos:
+
+        web_path = get_web_path(
+            file,
+            folder_type
+        )
+
+        html += f"""
+<div class="card">
+
+<img
+    src="{web_path}"
+    alt="Photo"
+    loading="lazy"
+    decoding="async">
+
+</div>
+"""
+
+
+    html += """
+</div>
+
+</div>
+
+
+<!-- =================================================
+     VIDEOS
+     ================================================= -->
+
+<div
+    id="videos"
+    style="display: none;">
+
+
+<div class="gallery">
+"""
+
+
+    # =================================================
+    # ADD VIDEOS
+    # =================================================
+
+    for file, folder_type in videos:
+
+        web_path = get_web_path(
+            file,
+            folder_type
+        )
+
+        html += f"""
+<div class="card">
+
+<video
+    controls
+    preload="none"
+    playsinline>
+
+<source
+    src="{web_path}">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+"""
+
+
+    html += """
+</div>
+
+</div>
+
+
+<!-- =================================================
+     CUSTOM FOLDERS
+     =================================================
+-->
+
+<div
+    id="customFolder"
+    style="display:none;">
+
+<div id="folderContent">
+</div>
+
+</div>
+
 
 </main>
 
+
+<!-- =================================================
+     JAVASCRIPT
+     ================================================= -->
+
 <script>
-const legacyFiles = [{legacy_files_js}];
-const collections = [{collections_js}];
 
-function fileUrl(path) {{
-    return path.split("/").map(encodeURIComponent).join("/");
-}}
 
-function escapeHtml(value) {{
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}}
+/* =================================================
+   FOLDER DATA
+   ================================================= */
 
-function setActive(element) {{
-    document.querySelectorAll(".nav button, .folder-button")
-        .forEach(x => x.classList.remove("active"));
-    if (element) element.classList.add("active");
-}}
+const folderData = {
+"""
 
-function renderMedia(files) {{
-    const content = document.getElementById("content");
-    const media = files.filter(x => x.kind === "image" || x.kind === "video");
-    const other = files.filter(x => x.kind !== "image" && x.kind !== "video");
 
-    if (!media.length && !other.length) {{
-        content.innerHTML = '<div class="empty">This folder is empty.</div>';
-        return;
-    }}
+    # =================================================
+    # GENERATE FOLDER DATA
+    # =================================================
 
-    let html = "";
+    for folder in custom_folders:
 
-    if (media.length) {{
-        html += '<div class="gallery">';
+        relative = folder.relative_to(
+            Path(REPO_FOLDER)
+        )
 
-        media.forEach(item => {{
-            const url = fileUrl(item.path);
+        folder_id = "/".join(
+            relative.parts
+        )
 
-            if (item.kind === "image") {{
-                html += `
-                <div class="card">
-                    <img src="${{url}}" alt="${{escapeHtml(item.name)}}" loading="lazy">
-                </div>`;
-            }} else {{
-                html += `
-                <div class="card">
-                    <video controls preload="none" playsinline>
-                        <source src="${{url}}">
-                        Your browser does not support video.
-                    </video>
-                </div>`;
-            }}
-        }});
+        folder_html = create_folder_html(folder)
 
-        html += "</div>";
-    }}
+        # Escape for JavaScript
+        folder_html = (
+            folder_html
+            .replace("\\", "\\\\")
+            .replace("`", "\\`")
+            .replace("${", "\\${")
+        )
 
-    if (other.length) {{
-        html += '<div class="file-list">';
+        html += f"""
+"{quote(folder_id, safe="")}": `
+{folder_html}
+`,
+"""
 
-        other.forEach(item => {{
-            const url = fileUrl(item.path);
-            const label =
-                item.kind === "html" ? "HTML" :
-                item.kind === "part" ? "PART / INCOMPLETE" :
-                "FILE";
 
-            html += `
-            <div class="file-card">
-                <div class="file-info">
-                    <div class="file-name">${{escapeHtml(item.name)}}</div>
-                    <div class="file-type">${{label}}</div>
-                </div>
-                <a class="file-link"
-                   href="${{url}}"
-                   target="_blank"
-                   rel="noopener">
-                   Open
-                </a>
-            </div>`;
-        }});
+    html += """
+};
 
-        html += "</div>";
-    }}
 
-    content.innerHTML = html;
-}}
+/* =================================================
+   SHOW NORMAL SECTION
+   ================================================= */
 
-function setHeader(title, description, pathParts=[]) {{
-    document.getElementById("pageTitle").innerText = title;
-    document.getElementById("pageDescription").innerText = description;
+function showSection(section, button) {
 
-    const breadcrumb = document.getElementById("breadcrumb");
+    const photos =
+        document.getElementById("photos");
 
-    if (!pathParts.length) {{
-        breadcrumb.innerHTML = "";
-        return;
-    }}
+    const videos =
+        document.getElementById("videos");
 
-    breadcrumb.innerHTML = pathParts
-        .map(x => `<span>› ${{escapeHtml(x)}}</span>`)
-        .join("");
-}}
+    const customFolder =
+        document.getElementById("customFolder");
 
-function openLegacy(type, button) {{
-    setActive(button);
+    const title =
+        document.getElementById("pageTitle");
 
-    if (type === "photos") {{
-        const files = legacyFiles.filter(x => x.kind === "image");
-        setHeader("Photos", "My photo collection");
-        renderMedia(files);
-    }} else {{
-        const files = legacyFiles.filter(x => x.kind === "video");
-        setHeader("Videos", "My video collection");
-        renderMedia(files);
-    }}
-}}
+    const description =
+        document.getElementById("pageDescription");
 
-function findFolderByPath(root, targetPath) {{
-    if (root.path === targetPath) return root;
 
-    for (const child of root.folders) {{
-        const found = findFolderByPath(child, targetPath);
-        if (found) return found;
-    }}
+    // Hide custom folder
 
-    return null;
-}}
+    customFolder.style.display = "none";
 
-function openFolder(folder, button) {{
-    setActive(button);
 
-    const parts = folder.path.split("/");
-    const content = document.getElementById("content");
+    // Remove active state
 
-    setHeader(
-        folder.name,
-        folder.folders.length
-            ? `${{folder.folders.length}} folder${{folder.folders.length === 1 ? "" : "s"}} · ${{folder.files.length}} file${{folder.files.length === 1 ? "" : "s"}}`
-            : `${{folder.files.length}} file${{folder.files.length === 1 ? "" : "s"}}`,
-        parts
-    );
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {
 
-    let html = "";
+            btn.classList.remove("active");
 
-    // Show subfolders prominently in the CENTER of the page.
-    if (folder.folders.length) {{
-        html += '<div class="folder-grid">';
+        });
 
-        folder.folders.forEach(child => {{
-            const count = child.files.length + child.folders.length;
-            html += `
-                <button class="folder-card" data-folder-path="${{escapeHtml(child.path)}}">
-                    <div class="folder-icon">📁</div>
-                    <div class="folder-card-info">
-                        <div class="folder-card-name">${{escapeHtml(child.name)}}</div>
-                        <div class="folder-card-meta">${{count}} item${{count === 1 ? "" : "s"}} · Open folder</div>
-                    </div>
-                </button>`;
-        }});
 
-        html += '</div>';
-    }}
+    // Activate clicked button
 
-    if (folder.files.length) {{
-        // Reuse the same beautiful media/file renderer for files.
-        content.innerHTML = html + '<div id="folderFiles"></div>';
-        const fileHost = document.getElementById("folderFiles");
+    button.classList.add("active");
 
-        const media = folder.files.filter(x => x.kind === "image" || x.kind === "video");
-        const other = folder.files.filter(x => x.kind !== "image" && x.kind !== "video");
-        let filesHtml = "";
 
-        if (media.length) {{
-            filesHtml += '<div class="gallery">';
-            media.forEach(item => {{
-                const url = fileUrl(item.path);
-                if (item.kind === "image") {{
-                    filesHtml += `<div class="card"><img src="${{url}}" alt="${{escapeHtml(item.name)}}" loading="lazy"></div>`;
-                }} else {{
-                    filesHtml += `<div class="card"><video controls preload="none" playsinline><source src="${{url}}">Your browser does not support video.</video></div>`;
-                }}
-            }});
-            filesHtml += '</div>';
-        }}
+    // =================================================
+    // PHOTOS
+    // =================================================
 
-        if (other.length) {{
-            filesHtml += '<div class="file-list">';
-            other.forEach(item => {{
-                const url = fileUrl(item.path);
-                const label = item.kind === "html" ? "HTML" : item.kind === "part" ? "PART / INCOMPLETE" : "FILE";
-                filesHtml += `<div class="file-card"><div class="file-info"><div class="file-name">${{escapeHtml(item.name)}}</div><div class="file-type">${{label}}</div></div><a class="file-link" href="${{url}}" target="_blank" rel="noopener">Open</a></div>`;
-            }});
-            filesHtml += '</div>';
-        }}
+    if (section === "photos") {
 
-        fileHost.innerHTML = filesHtml;
-    }} else {{
-        content.innerHTML = html || '<div class="empty">This folder is empty.</div>';
-    }}
+        photos.style.display = "block";
 
-    // Center folder cards open the selected subfolder.
-    content.querySelectorAll(".folder-card").forEach(card => {{
-        card.addEventListener("click", () => {{
-            const target = findFolderByPathFromCollections(card.dataset.folderPath);
-            if (target) openFolder(target, button);
-        }});
-    }});
-}}
+        videos.style.display = "none";
 
-function findFolderByPathFromCollections(targetPath) {{
-    for (const root of collections) {{
-        const found = findFolderByPath(root, targetPath);
-        if (found) return found;
-    }}
-    return null;
-}}
+        title.innerText = "Photos";
 
-function buildFolderNode(folder) {{
-    const wrapper = document.createElement("div");
+        description.innerText =
+            "My photo collection";
 
-    const row = document.createElement("div");
-    row.className = "folder-row";
+    }
 
-    const toggle = document.createElement("button");
-    toggle.className = "folder-toggle";
-    toggle.innerText = folder.folders.length ? "›" : "";
 
-    const button = document.createElement("button");
-    button.className = "folder-button";
-    button.innerText = "📁 " + folder.name;
+    // =================================================
+    // VIDEOS
+    // =================================================
 
-    button.onclick = () => openFolder(folder, button);
+    if (section === "videos") {
 
-    row.appendChild(toggle);
-    row.appendChild(button);
-    wrapper.appendChild(row);
+        photos.style.display = "none";
 
-    if (folder.folders.length) {{
-        const children = document.createElement("div");
-        children.className = "folder-children";
+        videos.style.display = "block";
 
-        folder.folders.forEach(child => {{
-            children.appendChild(buildFolderNode(child));
-        }});
+        title.innerText = "Videos";
 
-        toggle.onclick = () => {{
-            children.classList.toggle("open");
-            toggle.innerText =
-                children.classList.contains("open") ? "⌄" : "›";
-        }};
+        description.innerText =
+            "My video collection";
 
-        wrapper.appendChild(children);
-    }}
+    }
 
-    return wrapper;
-}}
+}
 
-function buildSidebar() {{
-    const root = document.getElementById("folderTree");
-    root.innerHTML = "";
 
-    collections.forEach(collection => {{
-        root.appendChild(buildFolderNode(collection));
-    }});
-}}
+/* =================================================
+   SHOW CUSTOM FOLDER
+   ================================================= */
 
-buildSidebar();
-openLegacy("photos", document.querySelector(".nav button"));
+function showCustomFolder(folderId, button = null) {
+
+    const photos =
+        document.getElementById("photos");
+
+    const videos =
+        document.getElementById("videos");
+
+    const customFolder =
+        document.getElementById("customFolder");
+
+    const folderContent =
+        document.getElementById("folderContent");
+
+    const title =
+        document.getElementById("pageTitle");
+
+    const description =
+        document.getElementById("pageDescription");
+
+
+    photos.style.display = "none";
+
+    videos.style.display = "none";
+
+    customFolder.style.display = "block";
+
+
+    /*
+       Decode folder name
+    */
+
+    let decodedId = folderId;
+
+    try {
+
+        decodedId = decodeURIComponent(folderId);
+
+    } catch (e) {
+
+        decodedId = folderId;
+
+    }
+
+
+    const parts =
+        decodedId.split("/");
+
+    const folderName =
+        parts[parts.length - 1];
+
+
+    title.innerText =
+        folderName;
+
+
+    description.innerText =
+        "Folder collection";
+
+
+    /*
+       Show folder content
+    */
+
+    if (folderData[folderId]) {
+
+        folderContent.innerHTML =
+            folderData[folderId];
+
+    } else {
+
+        folderContent.innerHTML = `
+            <p style="
+                color:#777;
+                padding:20px 0;
+            ">
+                This folder is empty.
+            </p>
+        `;
+
+    }
+
+
+    /*
+       Sidebar active state
+    */
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* =================================================
+   INITIAL
+   ================================================= */
+
 </script>
 
+
 </body>
+
 </html>
 """
 
-    index_file = REPO_FOLDER / "index.html"
 
-    with open(index_file, "w", encoding="utf-8") as f:
+    # =================================================
+    # SAVE INDEX.HTML
+    # =================================================
+
+    index_file = os.path.join(
+        REPO_FOLDER,
+        "index.html"
+    )
+
+
+    with open(
+        index_file,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
         f.write(html)
+
 
     print()
     print("Website updated!")
     print()
-    print(f"Legacy photos:       {photo_count}")
-    print(f"Legacy videos:       {video_count}")
-    print(f"Collection files:    {collection_file_count}")
-    print(f"Total files:         {total_count}")
-    print(f"Collections:         {len(collections)}")
+    print(f"Posts:  {total_count}")
+    print(f"Photos: {photo_count}")
+    print(f"Videos: {video_count}")
+    print(f"Folders: {len(custom_folders)}")
     print()
+
+
+# =====================================================
+# GET FOLDER STATE
+# =====================================================
+
+def get_folder_state():
+
+    state = {}
+
+    root = Path(REPO_FOLDER)
+
+    ignored = {
+        ".git",
+        ".github",
+        "__pycache__"
+    }
+
+    for file in root.rglob("*"):
+
+        if not file.is_file():
+            continue
+
+        if any(
+            part in ignored
+            for part in file.parts
+        ):
+            continue
+
+        if file.name in {
+            "index.html"
+        }:
+            continue
+
+        try:
+
+            relative = file.relative_to(root)
+
+            state[
+                str(relative)
+            ] = (
+                file.stat().st_size,
+                file.stat().st_mtime
+            )
+
+        except Exception:
+            pass
+
+    return state
 
 
 # =====================================================
@@ -1062,56 +1439,66 @@ openLegacy("photos", document.querySelector(".nav button"));
 # =====================================================
 
 def push_to_github():
+
     os.chdir(REPO_FOLDER)
 
-    subprocess.run(["git", "add", "."], check=True)
+
+    # Add changes
+
+    subprocess.run(
+        ["git", "add", "."],
+        check=True
+    )
+
+
+    # Check changes
 
     result = subprocess.run(
-        ["git", "diff", "--cached", "--quiet"]
+        [
+            "git",
+            "diff",
+            "--cached",
+            "--quiet"
+        ]
     )
+
 
     if result.returncode == 0:
+
         print("No changes to push.")
+
         return
 
+
+    # Commit
+
     subprocess.run(
-        ["git", "commit", "-m", "Update gallery"],
+        [
+            "git",
+            "commit",
+            "-m",
+            "Update gallery"
+        ],
         check=True
     )
 
+
+    # Push
+
     subprocess.run(
-        ["git", "push", "origin", "main"],
+        [
+            "git",
+            "push",
+            "origin",
+            "main"
+        ],
         check=True
     )
 
-    print("✅ Successfully pushed to GitHub!")
 
-
-# =====================================================
-# GET COMPLETE FOLDER STATE
-# =====================================================
-
-def get_folder_state():
-    state = {}
-
-    for path in REPO_FOLDER.rglob("*"):
-        if not path.is_file():
-            continue
-
-        # Ignore Git internals and generated Python cache.
-        if ".git" in path.parts or "__pycache__" in path.parts:
-            continue
-
-        try:
-            stat = path.stat()
-            state[path.relative_to(REPO_FOLDER).as_posix()] = (
-                stat.st_size,
-                stat.st_mtime_ns
-            )
-        except OSError:
-            pass
-
-    return state
+    print(
+        "✅ Successfully pushed to GitHub!"
+    )
 
 
 # =====================================================
@@ -1123,57 +1510,76 @@ print("======================================")
 print("       CINE GALLERY AUTOMATION")
 print("======================================")
 print()
-print("Repository:")
-print(REPO_FOLDER)
+
+print("Existing media folder:")
+print(MEDIA_FOLDER)
 print()
-print("Create collection folders directly inside:")
-print(REPO_FOLDER)
+
+print("New photos folder:")
+print(PHOTOS_FOLDER)
 print()
-print("Example:")
-print(REPO_FOLDER / "Naga Chaitanya" / "SIIMA")
+
+print("New videos folder:")
+print(VIDEOS_FOLDER)
 print()
-print("Supported:")
-print("  Images  -> gallery")
-print("  Videos  -> playable gallery")
-print("  HTML    -> openable file")
-print("  .part   -> listed as incomplete file")
-print("  Other   -> listed as file")
-print()
-print("Watching repository recursively...")
+
+print("Watching all folders...")
 print("Press CTRL + C to stop.")
 print()
 
+
+# =====================================================
+# FIRST UPDATE
+# =====================================================
+
 create_website()
+
 push_to_github()
+
+
+# =====================================================
+# WATCH
+# =====================================================
 
 old_state = get_folder_state()
 
+
 while True:
+
     try:
+
         time.sleep(10)
 
         new_state = get_folder_state()
 
+
         if old_state != new_state:
+
             print()
-            print("📁 Change detected!")
+            print("📸 New media/folder detected!")
             print()
 
             create_website()
+
             push_to_github()
 
             old_state = new_state
 
             print()
 
+
     except KeyboardInterrupt:
+
         print()
         print("Automation stopped.")
         break
 
+
     except Exception as error:
+
         print()
         print("ERROR:")
         print(error)
         print()
+
         time.sleep(10)
