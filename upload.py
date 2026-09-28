@@ -478,30 +478,47 @@ body {{
 }}}}
 
 .gallery {{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 22px;
+    column-width: 280px;
+    column-gap: 18px;
+    margin-top: 6px;
 }}
 
 .card {{
-    background: #181818;
-    padding: 8px;
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 7px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.08);
     border-radius: 16px;
     overflow: hidden;
+    break-inside: avoid;
+    vertical-align: top;
+    box-shadow: 0 12px 35px rgba(0,0,0,.20);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}}
+
+.card:hover {{
+    transform: translateY(-4px);
+    border-color: rgba(139,92,246,.35);
+    box-shadow: 0 18px 45px rgba(0,0,0,.30), 0 0 24px rgba(139,92,246,.10);
 }}
 
 .card img {{
     width: 100%;
-    height: 350px;
-    object-fit: cover;
+    height: auto;
+    max-height: 78vh;
+    object-fit: contain;
     display: block;
     border-radius: 11px;
+    background: #08090d;
 }}
 
 .card video {{
     width: 100%;
-    height: 350px;
-    object-fit: cover;
+    height: auto;
+    max-height: 78vh;
+    object-fit: contain;
     display: block;
     border-radius: 11px;
     background: #000;
@@ -599,7 +616,13 @@ body {{
     }}
 
     .gallery {{
-        grid-template-columns: 1fr;
+        column-width: auto;
+        column-count: 1;
+    }}
+
+    .card img,
+    .card video {{
+        max-height: none;
     }}
 }}
 
